@@ -1,0 +1,19 @@
+[  0%] Built target geometry_msgs_generate_messages_cpp
+[  0%] Built target _gazebo_logical_camera_generate_messages_check_deps_Model
+[  0%] Built target std_msgs_generate_messages_cpp
+[  0%] Built target _gazebo_logical_camera_generate_messages_check_deps_LogicalCameraImage
+[  0%] Built target std_msgs_generate_messages_lisp
+[  0%] Built target geometry_msgs_generate_messages_lisp
+[  0%] Built target std_msgs_generate_messages_nodejs
+[  0%] Built target geometry_msgs_generate_messages_nodejs
+[  0%] Built target std_msgs_generate_messages_py
+[  0%] Built target geometry_msgs_generate_messages_py
+[  0%] Built target std_msgs_generate_messages_eus
+[  0%] Built target geometry_msgs_generate_messages_eus
+[ 14%] Built target gazebo_logical_camera_generate_messages_lisp
+[ 28%] Built target gazebo_logical_camera_generate_messages_cpp
+[ 42%] Built target gazebo_logical_camera_generate_messages_nodejs
+[ 64%] Built target gazebo_logical_camera_generate_messages_py
+[ 85%] Built target gazebo_logical_camera_generate_messages_eus
+[100%] Built target ROSLogicalCameraPlugin
+[100%] Built target gazebo_logical_camera_generate_messages

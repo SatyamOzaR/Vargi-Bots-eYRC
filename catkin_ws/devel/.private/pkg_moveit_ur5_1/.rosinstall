@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/satyam/catkin_ws/devel/.private/pkg_moveit_ur5_1/setup.sh

@@ -1,0 +1,1 @@
+/home/satyam/catkin_ws/devel/.private/ur10_e_moveit_config/lib/pkgconfig/ur10_e_moveit_config.pc

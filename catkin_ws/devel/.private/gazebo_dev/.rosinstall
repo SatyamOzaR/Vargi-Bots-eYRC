@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/satyam/catkin_ws/devel/.private/gazebo_dev/setup.sh

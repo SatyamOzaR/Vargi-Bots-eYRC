@@ -1,0 +1,8 @@
+prefix=/home/satyam/catkin_ws/install
+
+Name: pkg_iot_ros_bridge
+Description: Description of pkg_iot_ros_bridge
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: actionlib_msgs roscpp rospy std_msgs

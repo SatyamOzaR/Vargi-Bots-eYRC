@@ -1,0 +1,1 @@
+/home/satyam/catkin_ws/devel/.private/pkg_ros_basics/share/gennodejs/ros/pkg_ros_basics/_index.js

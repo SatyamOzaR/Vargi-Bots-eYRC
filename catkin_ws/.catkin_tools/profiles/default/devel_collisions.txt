@@ -1,0 +1,2 @@
+/home/satyam/catkin_ws/devel/./cmake.lock 175
+/home/satyam/catkin_ws/devel/lib/libROSLogicalCameraPlugin.so 5

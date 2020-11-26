@@ -1,0 +1,8 @@
+prefix=/home/satyam/catkin_ws/devel/.private/gazebo_dev
+
+Name: gazebo_dev
+Description: Description of gazebo_dev
+Version: 2.8.7
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

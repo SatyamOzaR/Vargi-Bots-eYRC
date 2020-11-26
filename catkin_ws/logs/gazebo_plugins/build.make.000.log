@@ -1,0 +1,353 @@
+[35m[1mScanning dependencies of target gazebo_ros_template[0m
+[  1%] [32mBuilding CXX object CMakeFiles/gazebo_ros_template.dir/src/gazebo_ros_template.cpp.o[0m
+[  2%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_template.so[0m
+[  2%] Built target gazebo_ros_template
+[35m[1mScanning dependencies of target gazebo_ros_vacuum_gripper[0m
+[  3%] [32mBuilding CXX object CMakeFiles/gazebo_ros_vacuum_gripper.dir/src/gazebo_ros_vacuum_gripper.cpp.o[0m
+[35m[1mScanning dependencies of target gazebo_ros_range[0m
+[35m[1mScanning dependencies of target gazebo_ros_ft_sensor[0m
+[  4%] [32mBuilding CXX object CMakeFiles/gazebo_ros_range.dir/src/gazebo_ros_range.cpp.o[0m
+[35m[1mScanning dependencies of target gazebo_ros_planar_move[0m
+[  6%] [32mBuilding CXX object CMakeFiles/gazebo_ros_ft_sensor.dir/src/gazebo_ros_ft_sensor.cpp.o[0m
+[  7%] [32mBuilding CXX object CMakeFiles/gazebo_ros_planar_move.dir/src/gazebo_ros_planar_move.cpp.o[0m
+[  8%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_vacuum_gripper.so[0m
+[  8%] Built target gazebo_ros_vacuum_gripper
+[35m[1mScanning dependencies of target gazebo_ros_video[0m
+[  9%] [32mBuilding CXX object CMakeFiles/gazebo_ros_video.dir/src/gazebo_ros_video.cpp.o[0m
+[ 11%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_ft_sensor.so[0m
+[ 12%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_range.so[0m
+[ 13%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_planar_move.so[0m
+[ 13%] Built target gazebo_ros_ft_sensor
+[35m[1mScanning dependencies of target gazebo_ros_utils[0m
+[ 13%] Built target gazebo_ros_range
+[35m[1mScanning dependencies of target gazebo_ros_hand_of_god[0m
+[ 14%] [32mBuilding CXX object CMakeFiles/gazebo_ros_utils.dir/src/gazebo_ros_utils.cpp.o[0m
+[ 16%] [32mBuilding CXX object CMakeFiles/gazebo_ros_hand_of_god.dir/src/gazebo_ros_hand_of_god.cpp.o[0m
+[ 16%] Built target gazebo_ros_planar_move
+[35m[1mScanning dependencies of target tf2_msgs_generate_messages_eus[0m
+[ 16%] Built target tf2_msgs_generate_messages_eus
+[35m[1mScanning dependencies of target diagnostic_msgs_generate_messages_nodejs[0m
+[ 16%] Built target diagnostic_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target diagnostic_msgs_generate_messages_lisp[0m
+[ 16%] Built target diagnostic_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target diagnostic_msgs_generate_messages_eus[0m
+[ 16%] Built target diagnostic_msgs_generate_messages_eus
+[35m[1mScanning dependencies of target polled_camera_generate_messages_py[0m
+[ 16%] Built target polled_camera_generate_messages_py
+[35m[1mScanning dependencies of target polled_camera_generate_messages_eus[0m
+[ 16%] Built target polled_camera_generate_messages_eus
+[35m[1mScanning dependencies of target polled_camera_generate_messages_cpp[0m
+[ 16%] Built target polled_camera_generate_messages_cpp
+[35m[1mScanning dependencies of target dynamic_reconfigure_generate_messages_py[0m
+[ 16%] Built target dynamic_reconfigure_generate_messages_py
+[35m[1mScanning dependencies of target dynamic_reconfigure_generate_messages_nodejs[0m
+[ 16%] Built target dynamic_reconfigure_generate_messages_nodejs
+[35m[1mScanning dependencies of target dynamic_reconfigure_generate_messages_eus[0m
+[ 16%] Built target dynamic_reconfigure_generate_messages_eus
+[35m[1mScanning dependencies of target tf2_msgs_generate_messages_nodejs[0m
+[ 16%] Built target tf2_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target std_srvs_generate_messages_py[0m
+[ 16%] Built target std_srvs_generate_messages_py
+[35m[1mScanning dependencies of target std_srvs_generate_messages_cpp[0m
+[ 16%] Built target std_srvs_generate_messages_cpp
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_py[0m
+[ 16%] Built target geometry_msgs_generate_messages_py
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_lisp[0m
+[ 16%] Built target geometry_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_eus[0m
+[ 16%] Built target geometry_msgs_generate_messages_eus
+[35m[1mScanning dependencies of target sensor_msgs_generate_messages_nodejs[0m
+[ 16%] Built target sensor_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target roscpp_generate_messages_cpp[0m
+[ 16%] Built target roscpp_generate_messages_cpp
+[35m[1mScanning dependencies of target actionlib_generate_messages_cpp[0m
+[ 16%] Built target actionlib_generate_messages_cpp
+[35m[1mScanning dependencies of target trajectory_msgs_generate_messages_eus[0m
+[ 16%] Built target trajectory_msgs_generate_messages_eus
+[35m[1mScanning dependencies of target polled_camera_generate_messages_nodejs[0m
+[ 16%] Built target polled_camera_generate_messages_nodejs
+[35m[1mScanning dependencies of target roscpp_generate_messages_py[0m
+[ 16%] Built target roscpp_generate_messages_py
+[35m[1mScanning dependencies of target polled_camera_generate_messages_lisp[0m
+[ 16%] Built target polled_camera_generate_messages_lisp
+[35m[1mScanning dependencies of target trajectory_msgs_generate_messages_cpp[0m
+[ 16%] Built target trajectory_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target dynamic_reconfigure_generate_messages_cpp[0m
+[ 16%] Built target dynamic_reconfigure_generate_messages_cpp
+[35m[1mScanning dependencies of target tf_generate_messages_py[0m
+[ 16%] Built target tf_generate_messages_py
+[35m[1mScanning dependencies of target sensor_msgs_generate_messages_eus[0m
+[ 16%] Built target sensor_msgs_generate_messages_eus
+[35m[1mScanning dependencies of target std_msgs_generate_messages_cpp[0m
+[ 16%] Built target std_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target sensor_msgs_generate_messages_py[0m
+[ 16%] Built target sensor_msgs_generate_messages_py
+[35m[1mScanning dependencies of target nodelet_generate_messages_py[0m
+[ 16%] Built target nodelet_generate_messages_py
+[35m[1mScanning dependencies of target nav_msgs_generate_messages_nodejs[0m
+[ 16%] Built target nav_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_nodejs[0m
+[ 16%] Built target actionlib_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_nodejs[0m
+[ 16%] Built target geometry_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target trajectory_msgs_generate_messages_py[0m
+[ 16%] Built target trajectory_msgs_generate_messages_py
+[35m[1mScanning dependencies of target std_msgs_generate_messages_eus[0m
+[ 16%] Built target std_msgs_generate_messages_eus
+[35m[1mScanning dependencies of target gazebo_msgs_generate_messages_py[0m
+[ 16%] Built target gazebo_msgs_generate_messages_py
+[35m[1mScanning dependencies of target gazebo_msgs_generate_messages_eus[0m
+[ 16%] Built target gazebo_msgs_generate_messages_eus
+[35m[1mScanning dependencies of target sensor_msgs_generate_messages_lisp[0m
+[ 16%] Built target sensor_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target nav_msgs_generate_messages_cpp[0m
+[ 16%] Built target nav_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target std_srvs_generate_messages_nodejs[0m
+[ 16%] Built target std_srvs_generate_messages_nodejs
+[35m[1mScanning dependencies of target nodelet_generate_messages_cpp[0m
+[ 16%] Built target nodelet_generate_messages_cpp
+[35m[1mScanning dependencies of target bond_generate_messages_py[0m
+[ 16%] Built target bond_generate_messages_py
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_cpp[0m
+[ 16%] Built target geometry_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target actionlib_generate_messages_lisp[0m
+[ 16%] Built target actionlib_generate_messages_lisp
+[35m[1mScanning dependencies of target dynamic_reconfigure_generate_messages_lisp[0m
+[ 16%] Built target dynamic_reconfigure_generate_messages_lisp
+[35m[1mScanning dependencies of target gazebo_msgs_generate_messages_cpp[0m
+[ 16%] Built target gazebo_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target std_msgs_generate_messages_nodejs[0m
+[ 16%] Built target std_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target bond_generate_messages_lisp[0m
+[ 16%] Built target bond_generate_messages_lisp
+[35m[1mScanning dependencies of target sensor_msgs_generate_messages_cpp[0m
+[ 16%] Built target sensor_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target roscpp_generate_messages_nodejs[0m
+[ 16%] Built target roscpp_generate_messages_nodejs
+[35m[1mScanning dependencies of target std_msgs_generate_messages_lisp[0m
+[ 16%] Built target std_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target diagnostic_msgs_generate_messages_py[0m
+[ 16%] Built target diagnostic_msgs_generate_messages_py
+[35m[1mScanning dependencies of target gazebo_msgs_generate_messages_lisp[0m
+[ 16%] Built target gazebo_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target std_srvs_generate_messages_eus[0m
+[ 16%] Built target std_srvs_generate_messages_eus
+[35m[1mScanning dependencies of target roscpp_generate_messages_lisp[0m
+[ 16%] Built target roscpp_generate_messages_lisp
+[35m[1mScanning dependencies of target bond_generate_messages_eus[0m
+[ 16%] Built target bond_generate_messages_eus
+[35m[1mScanning dependencies of target _catkin_empty_exported_target[0m
+[ 16%] Built target _catkin_empty_exported_target
+[35m[1mScanning dependencies of target std_srvs_generate_messages_lisp[0m
+[ 16%] Built target std_srvs_generate_messages_lisp
+[35m[1mScanning dependencies of target std_msgs_generate_messages_py[0m
+[ 16%] Built target std_msgs_generate_messages_py
+[35m[1mScanning dependencies of target rosgraph_msgs_generate_messages_cpp[0m
+[ 16%] Built target rosgraph_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target gazebo_msgs_generate_messages_nodejs[0m
+[ 16%] Built target gazebo_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target rosgraph_msgs_generate_messages_eus[0m
+[ 16%] Built target rosgraph_msgs_generate_messages_eus
+[35m[1mScanning dependencies of target rosgraph_msgs_generate_messages_lisp[0m
+[ 16%] Built target rosgraph_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target rosgraph_msgs_generate_messages_nodejs[0m
+[ 16%] Built target rosgraph_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target nodelet_generate_messages_eus[0m
+[ 16%] Built target nodelet_generate_messages_eus
+[35m[1mScanning dependencies of target nodelet_generate_messages_lisp[0m
+[ 16%] Built target nodelet_generate_messages_lisp
+[35m[1mScanning dependencies of target roscpp_generate_messages_eus[0m
+[ 16%] Built target roscpp_generate_messages_eus
+[35m[1mScanning dependencies of target rosgraph_msgs_generate_messages_py[0m
+[ 16%] Built target rosgraph_msgs_generate_messages_py
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_eus[0m
+[ 16%] Built target actionlib_msgs_generate_messages_eus
+[35m[1mScanning dependencies of target nodelet_generate_messages_nodejs[0m
+[ 16%] Built target nodelet_generate_messages_nodejs
+[35m[1mScanning dependencies of target trajectory_msgs_generate_messages_lisp[0m
+[ 16%] Built target trajectory_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target bond_generate_messages_cpp[0m
+[ 16%] Built target bond_generate_messages_cpp
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_cpp[0m
+[ 16%] Built target actionlib_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target tf_generate_messages_eus[0m
+[ 16%] Built target tf_generate_messages_eus
+[35m[1mScanning dependencies of target trajectory_msgs_generate_messages_nodejs[0m
+[ 16%] Built target trajectory_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target bond_generate_messages_nodejs[0m
+[ 16%] Built target bond_generate_messages_nodejs
+[35m[1mScanning dependencies of target nav_msgs_generate_messages_lisp[0m
+[ 16%] Built target nav_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target dynamic_reconfigure_gencfg[0m
+[ 16%] Built target dynamic_reconfigure_gencfg
+[35m[1mScanning dependencies of target tf2_msgs_generate_messages_lisp[0m
+[ 16%] Built target tf2_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target nav_msgs_generate_messages_py[0m
+[ 16%] Built target nav_msgs_generate_messages_py
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_lisp[0m
+[ 16%] Built target actionlib_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_py[0m
+[ 16%] Built target actionlib_msgs_generate_messages_py
+[35m[1mScanning dependencies of target tf_generate_messages_lisp[0m
+[ 16%] Built target tf_generate_messages_lisp
+[35m[1mScanning dependencies of target tf_generate_messages_nodejs[0m
+[ 16%] Built target tf_generate_messages_nodejs
+[35m[1mScanning dependencies of target diagnostic_msgs_generate_messages_cpp[0m
+[ 16%] Built target diagnostic_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target actionlib_generate_messages_eus[0m
+[ 16%] Built target actionlib_generate_messages_eus
+[35m[1mScanning dependencies of target tf_generate_messages_cpp[0m
+[ 16%] Built target tf_generate_messages_cpp
+[35m[1mScanning dependencies of target actionlib_generate_messages_nodejs[0m
+[ 16%] Built target actionlib_generate_messages_nodejs
+[35m[1mScanning dependencies of target tf2_msgs_generate_messages_py[0m
+[ 16%] Built target tf2_msgs_generate_messages_py
+[35m[1mScanning dependencies of target actionlib_generate_messages_py[0m
+[ 16%] Built target actionlib_generate_messages_py
+[35m[1mScanning dependencies of target tf2_msgs_generate_messages_cpp[0m
+[ 16%] Built target tf2_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target nav_msgs_generate_messages_eus[0m
+[ 16%] Built target nav_msgs_generate_messages_eus
+[35m[1mScanning dependencies of target gazebo_ros_projector[0m
+[ 17%] [32mBuilding CXX object CMakeFiles/gazebo_ros_projector.dir/src/gazebo_ros_projector.cpp.o[0m
+[ 18%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_hand_of_god.so[0m
+[ 19%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_utils.so[0m
+[ 19%] Built target gazebo_ros_hand_of_god
+[35m[1mScanning dependencies of target gazebo_ros_force[0m
+[ 19%] Built target gazebo_ros_utils
+[35m[1mScanning dependencies of target gazebo_ros_imu[0m
+[ 20%] [32mBuilding CXX object CMakeFiles/gazebo_ros_force.dir/src/gazebo_ros_force.cpp.o[0m
+[ 22%] [32mBuilding CXX object CMakeFiles/gazebo_ros_imu.dir/src/gazebo_ros_imu.cpp.o[0m
+[ 23%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_video.so[0m
+[ 23%] Built target gazebo_ros_video
+[35m[1mScanning dependencies of target gazebo_ros_block_laser[0m
+[ 24%] [32mBuilding CXX object CMakeFiles/gazebo_ros_block_laser.dir/src/gazebo_ros_block_laser.cpp.o[0m
+[ 25%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_force.so[0m
+[ 25%] Built target gazebo_ros_force
+[35m[1mScanning dependencies of target MultiCameraPlugin[0m
+[ 27%] [32mBuilding CXX object CMakeFiles/MultiCameraPlugin.dir/src/MultiCameraPlugin.cpp.o[0m
+[ 28%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_imu.so[0m
+[ 28%] Built target gazebo_ros_imu
+[35m[1mScanning dependencies of target gazebo_ros_laser[0m
+[ 29%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_projector.so[0m
+[ 30%] [32mBuilding CXX object CMakeFiles/gazebo_ros_laser.dir/src/gazebo_ros_laser.cpp.o[0m
+[ 30%] Built target gazebo_ros_projector
+[35m[1mScanning dependencies of target gazebo_ros_harness[0m
+[ 32%] [32mBuilding CXX object CMakeFiles/gazebo_ros_harness.dir/src/gazebo_ros_harness.cpp.o[0m
+[ 33%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_block_laser.so[0m
+[ 33%] Built target gazebo_ros_block_laser
+[35m[1mScanning dependencies of target gazebo_ros_bumper[0m
+[ 34%] [32mBuilding CXX object CMakeFiles/gazebo_ros_bumper.dir/src/gazebo_ros_bumper.cpp.o[0m
+[ 35%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_harness.so[0m
+[ 35%] Built target gazebo_ros_harness
+[35m[1mScanning dependencies of target gazebo_ros_joint_pose_trajectory[0m
+[ 37%] [32mBuilding CXX object CMakeFiles/gazebo_ros_joint_pose_trajectory.dir/src/gazebo_ros_joint_pose_trajectory.cpp.o[0m
+[ 38%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_laser.so[0m
+[ 38%] Built target gazebo_ros_laser
+[35m[1mScanning dependencies of target gazebo_ros_skid_steer_drive[0m
+[ 39%] [32mBuilding CXX object CMakeFiles/gazebo_ros_skid_steer_drive.dir/src/gazebo_ros_skid_steer_drive.cpp.o[0m
+[ 40%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libMultiCameraPlugin.so[0m
+[ 40%] Built target MultiCameraPlugin
+[35m[1mScanning dependencies of target gazebo_ros_tricycle_drive[0m
+[ 41%] [32mBuilding CXX object CMakeFiles/gazebo_ros_tricycle_drive.dir/src/gazebo_ros_tricycle_drive.cpp.o[0m
+[ 43%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_bumper.so[0m
+[ 43%] Built target gazebo_ros_bumper
+[35m[1mScanning dependencies of target gazebo_ros_imu_sensor[0m
+[ 44%] [32mBuilding CXX object CMakeFiles/gazebo_ros_imu_sensor.dir/src/gazebo_ros_imu_sensor.cpp.o[0m
+[ 45%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_joint_pose_trajectory.so[0m
+[ 45%] Built target gazebo_ros_joint_pose_trajectory
+[35m[1mScanning dependencies of target gazebo_ros_f3d[0m
+[ 46%] [32mBuilding CXX object CMakeFiles/gazebo_ros_f3d.dir/src/gazebo_ros_f3d.cpp.o[0m
+[ 48%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_skid_steer_drive.so[0m
+[ 48%] Built target gazebo_ros_skid_steer_drive
+[35m[1mScanning dependencies of target pub_joint_trajectory_test[0m
+[ 49%] [32mBuilding CXX object CMakeFiles/pub_joint_trajectory_test.dir/test/pub_joint_trajectory_test.cpp.o[0m
+[ 50%] [32m[1mLinking CXX executable /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/gazebo_plugins/pub_joint_trajectory_test[0m
+[ 51%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_tricycle_drive.so[0m
+[ 51%] Built target pub_joint_trajectory_test
+[35m[1mScanning dependencies of target gazebo_ros_p3d[0m
+[ 53%] [32mBuilding CXX object CMakeFiles/gazebo_ros_p3d.dir/src/gazebo_ros_p3d.cpp.o[0m
+[ 53%] Built target gazebo_ros_tricycle_drive
+[35m[1mScanning dependencies of target gazebo_ros_gpu_laser[0m
+[ 54%] [32mBuilding CXX object CMakeFiles/gazebo_ros_gpu_laser.dir/src/gazebo_ros_gpu_laser.cpp.o[0m
+[ 55%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_imu_sensor.so[0m
+[ 55%] Built target gazebo_ros_imu_sensor
+[35m[1mScanning dependencies of target gazebo_ros_diff_drive[0m
+[ 56%] [32mBuilding CXX object CMakeFiles/gazebo_ros_diff_drive.dir/src/gazebo_ros_diff_drive.cpp.o[0m
+[ 58%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_f3d.so[0m
+[ 58%] Built target gazebo_ros_f3d
+[35m[1mScanning dependencies of target gazebo_ros_joint_state_publisher[0m
+[ 59%] [32mBuilding CXX object CMakeFiles/gazebo_ros_joint_state_publisher.dir/src/gazebo_ros_joint_state_publisher.cpp.o[0m
+[ 60%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_p3d.so[0m
+[ 60%] Built target gazebo_ros_p3d
+[35m[1mScanning dependencies of target gazebo_plugins_gencfg[0m
+[ 61%] [34m[1mGenerating dynamic reconfigure files from cfg/CameraSynchronizer.cfg: /home/satyam/catkin_ws/devel/.private/gazebo_plugins/include/gazebo_plugins/CameraSynchronizerConfig.h /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/python2.7/dist-packages/gazebo_plugins/cfg/CameraSynchronizerConfig.py[0m
+Generating reconfiguration files for CameraSynchronizer in gazebo_plugins
+Wrote header file in /home/satyam/catkin_ws/devel/.private/gazebo_plugins/include/gazebo_plugins/CameraSynchronizerConfig.h
+[ 62%] [34m[1mGenerating dynamic reconfigure files from cfg/GazeboRosCamera.cfg: /home/satyam/catkin_ws/devel/.private/gazebo_plugins/include/gazebo_plugins/GazeboRosCameraConfig.h /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/python2.7/dist-packages/gazebo_plugins/cfg/GazeboRosCameraConfig.py[0m
+Generating reconfiguration files for GazeboRosCamera in gazebo_plugins
+Wrote header file in /home/satyam/catkin_ws/devel/.private/gazebo_plugins/include/gazebo_plugins/GazeboRosCameraConfig.h
+[ 64%] [34m[1mGenerating dynamic reconfigure files from cfg/GazeboRosOpenniKinect.cfg: /home/satyam/catkin_ws/devel/.private/gazebo_plugins/include/gazebo_plugins/GazeboRosOpenniKinectConfig.h /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/python2.7/dist-packages/gazebo_plugins/cfg/GazeboRosOpenniKinectConfig.py[0m
+Generating reconfiguration files for GazeboRosOpenniKinect in gazebo_plugins
+Wrote header file in /home/satyam/catkin_ws/devel/.private/gazebo_plugins/include/gazebo_plugins/GazeboRosOpenniKinectConfig.h
+[ 65%] [34m[1mGenerating dynamic reconfigure files from cfg/Hokuyo.cfg: /home/satyam/catkin_ws/devel/.private/gazebo_plugins/include/gazebo_plugins/HokuyoConfig.h /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/python2.7/dist-packages/gazebo_plugins/cfg/HokuyoConfig.py[0m
+Generating reconfiguration files for Hokuyo in gazebo_plugins
+Wrote header file in /home/satyam/catkin_ws/devel/.private/gazebo_plugins/include/gazebo_plugins/HokuyoConfig.h
+[ 66%] [34m[1mGenerating dynamic reconfigure files from cfg/WheelSlip.cfg: /home/satyam/catkin_ws/devel/.private/gazebo_plugins/include/gazebo_plugins/WheelSlipConfig.h /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/python2.7/dist-packages/gazebo_plugins/cfg/WheelSlipConfig.py[0m
+Generating reconfiguration files for WheelSlip in gazebo_plugins
+Wrote header file in /home/satyam/catkin_ws/devel/.private/gazebo_plugins/include/gazebo_plugins/WheelSlipConfig.h
+[ 66%] Built target gazebo_plugins_gencfg
+[35m[1mScanning dependencies of target gazebo_ros_camera_utils[0m
+[ 67%] [32mBuilding CXX object CMakeFiles/gazebo_ros_camera_utils.dir/src/gazebo_ros_camera_utils.cpp.o[0m
+[ 69%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_gpu_laser.so[0m
+[ 70%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_diff_drive.so[0m
+[ 70%] Built target gazebo_ros_gpu_laser
+[35m[1mScanning dependencies of target vision_reconfigure[0m
+[ 71%] [32mBuilding CXX object CMakeFiles/vision_reconfigure.dir/src/vision_reconfigure.cpp.o[0m
+[ 71%] Built target gazebo_ros_diff_drive
+[35m[1mScanning dependencies of target hokuyo_node[0m
+[ 72%] [32mBuilding CXX object CMakeFiles/hokuyo_node.dir/src/hokuyo_node.cpp.o[0m
+[ 74%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_joint_state_publisher.so[0m
+[ 74%] Built target gazebo_ros_joint_state_publisher
+[35m[1mScanning dependencies of target gazebo_ros_elevator[0m
+[ 75%] [32mBuilding CXX object CMakeFiles/gazebo_ros_elevator.dir/src/gazebo_ros_elevator.cpp.o[0m
+[ 76%] [32m[1mLinking CXX executable /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/gazebo_plugins/hokuyo_node[0m
+[ 76%] Built target hokuyo_node
+[ 77%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libvision_reconfigure.so[0m
+[ 77%] Built target vision_reconfigure
+[35m[1mScanning dependencies of target camera_synchronizer[0m
+[ 79%] [32mBuilding CXX object CMakeFiles/camera_synchronizer.dir/src/camera_synchronizer.cpp.o[0m
+[ 80%] [32m[1mLinking CXX executable /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/gazebo_plugins/camera_synchronizer[0m
+[ 80%] Built target camera_synchronizer
+[ 81%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_elevator.so[0m
+[ 81%] Built target gazebo_ros_elevator
+[ 82%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_camera_utils.so[0m
+[ 82%] Built target gazebo_ros_camera_utils
+[35m[1mScanning dependencies of target gazebo_ros_triggered_camera[0m
+[35m[1mScanning dependencies of target gazebo_ros_depth_camera[0m
+[35m[1mScanning dependencies of target gazebo_ros_camera[0m
+[35m[1mScanning dependencies of target gazebo_ros_prosilica[0m
+[ 83%] [32mBuilding CXX object CMakeFiles/gazebo_ros_camera.dir/src/gazebo_ros_camera.cpp.o[0m
+[ 85%] [32mBuilding CXX object CMakeFiles/gazebo_ros_triggered_camera.dir/src/gazebo_ros_triggered_camera.cpp.o[0m
+[ 86%] [32mBuilding CXX object CMakeFiles/gazebo_ros_prosilica.dir/src/gazebo_ros_prosilica.cpp.o[0m
+[ 87%] [32mBuilding CXX object CMakeFiles/gazebo_ros_depth_camera.dir/src/gazebo_ros_depth_camera.cpp.o[0m
+[ 92%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_triggered_camera.so[0m
+[ 92%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_depth_camera.so[0m
+[ 92%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_camera.so[0m
+[ 92%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_prosilica.so[0m
+[ 92%] Built target gazebo_ros_camera
+[ 92%] Built target gazebo_ros_triggered_camera
+[ 92%] Built target gazebo_ros_prosilica
+[ 92%] Built target gazebo_ros_depth_camera
+[35m[1mScanning dependencies of target gazebo_ros_openni_kinect[0m
+[35m[1mScanning dependencies of target gazebo_ros_triggered_multicamera[0m
+[35m[1mScanning dependencies of target gazebo_ros_multicamera[0m
+[ 93%] [32mBuilding CXX object CMakeFiles/gazebo_ros_multicamera.dir/src/gazebo_ros_multicamera.cpp.o[0m
+[ 95%] [32mBuilding CXX object CMakeFiles/gazebo_ros_triggered_multicamera.dir/src/gazebo_ros_triggered_multicamera.cpp.o[0m
+[ 96%] [32mBuilding CXX object CMakeFiles/gazebo_ros_openni_kinect.dir/src/gazebo_ros_openni_kinect.cpp.o[0m
+[ 97%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_multicamera.so[0m
+[ 98%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_triggered_multicamera.so[0m
+[ 98%] Built target gazebo_ros_multicamera
+[ 98%] Built target gazebo_ros_triggered_multicamera
+[100%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/gazebo_plugins/lib/libgazebo_ros_openni_kinect.so[0m
+[100%] Built target gazebo_ros_openni_kinect

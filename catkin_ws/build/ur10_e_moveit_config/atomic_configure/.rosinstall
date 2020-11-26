@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/satyam/catkin_ws/devel/.private/ur10_e_moveit_config/setup.sh

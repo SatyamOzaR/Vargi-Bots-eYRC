@@ -1,0 +1,3 @@
+Warning: Cannot symlink from /home/satyam/catkin_ws/devel/.private/hrwros_gazebo/lib/libROSLogicalCameraPlugin.so to existing file /home/satyam/catkin_ws/devel/lib/libROSLogicalCameraPlugin.so
+Warning: Source hash: 367da24125e6fa4f41c6bc57a3b46915
+Warning: Dest hash: 700f18da6f3ecd5d68df06e9f69368cd

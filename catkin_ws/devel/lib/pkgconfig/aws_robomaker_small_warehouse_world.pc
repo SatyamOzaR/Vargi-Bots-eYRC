@@ -1,0 +1,1 @@
+/home/satyam/catkin_ws/devel/.private/aws_robomaker_small_warehouse_world/lib/pkgconfig/aws_robomaker_small_warehouse_world.pc

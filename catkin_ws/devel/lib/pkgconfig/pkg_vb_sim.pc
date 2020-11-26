@@ -1,0 +1,1 @@
+/home/satyam/catkin_ws/devel/.private/pkg_vb_sim/lib/pkgconfig/pkg_vb_sim.pc

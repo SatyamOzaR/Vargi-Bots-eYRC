@@ -1,0 +1,1 @@
+/home/satyam/catkin_ws/devel/.private/pkg_vb_sim/share/roseus/ros/pkg_vb_sim/manifest.l

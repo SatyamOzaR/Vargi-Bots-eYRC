@@ -1,0 +1,1 @@
+/home/satyam/catkin_ws/devel/.private/pkg_task2/lib/pkgconfig/pkg_task2.pc

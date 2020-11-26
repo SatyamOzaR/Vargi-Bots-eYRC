@@ -1,0 +1,8 @@
+prefix=/home/satyam/catkin_ws/devel/.private/pkg_moveit_ur5_1
+
+Name: pkg_moveit_ur5_1
+Description: Description of pkg_moveit_ur5_1
+Version: 0.3.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

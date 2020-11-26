@@ -1,0 +1,8 @@
+prefix=/home/satyam/catkin_ws/devel/.private/gazebo_logical_camera
+
+Name: gazebo_logical_camera
+Description: Description of gazebo_logical_camera
+Version: 1.0.0
+Cflags: -I/home/satyam/catkin_ws/devel/.private/gazebo_logical_camera/include
+Libs: -L${prefix}/lib 
+Requires: message_runtime std_srvs

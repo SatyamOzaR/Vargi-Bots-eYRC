@@ -1,0 +1,20 @@
+[  0%] Built target geometry_msgs_generate_messages_cpp
+[  0%] Built target _gazebo_conveyor_generate_messages_check_deps_ConveyorBeltControl
+[  0%] Built target _gazebo_conveyor_generate_messages_check_deps_ConveyorBeltState
+[  0%] Built target std_msgs_generate_messages_cpp
+[ 11%] Built target ConveyorBeltPlugin
+[ 11%] Built target std_msgs_generate_messages_py
+[ 11%] Built target geometry_msgs_generate_messages_py
+[ 11%] Built target std_msgs_generate_messages_nodejs
+[ 11%] Built target geometry_msgs_generate_messages_nodejs
+[ 11%] Built target std_msgs_generate_messages_lisp
+[ 11%] Built target geometry_msgs_generate_messages_lisp
+[ 11%] Built target std_msgs_generate_messages_eus
+[ 11%] Built target geometry_msgs_generate_messages_eus
+[ 23%] Built target gazebo_conveyor_generate_messages_cpp
+[ 47%] Built target gazebo_conveyor_generate_messages_py
+[ 58%] Built target gazebo_conveyor_generate_messages_nodejs
+[ 76%] Built target gazebo_conveyor_generate_messages_eus
+[ 88%] Built target gazebo_conveyor_generate_messages_lisp
+[100%] Built target ROSConveyorBeltPlugin
+[100%] Built target gazebo_conveyor_generate_messages

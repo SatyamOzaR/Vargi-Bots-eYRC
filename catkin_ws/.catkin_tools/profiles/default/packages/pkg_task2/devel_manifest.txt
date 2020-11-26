@@ -1,0 +1,5 @@
+pkg_task2
+/home/satyam/catkin_ws/devel/.private/pkg_task2/cmake.lock /home/satyam/catkin_ws/devel/./cmake.lock
+/home/satyam/catkin_ws/devel/.private/pkg_task2/lib/pkgconfig/pkg_task2.pc /home/satyam/catkin_ws/devel/lib/pkgconfig/pkg_task2.pc
+/home/satyam/catkin_ws/devel/.private/pkg_task2/share/pkg_task2/cmake/pkg_task2Config-version.cmake /home/satyam/catkin_ws/devel/share/pkg_task2/cmake/pkg_task2Config-version.cmake
+/home/satyam/catkin_ws/devel/.private/pkg_task2/share/pkg_task2/cmake/pkg_task2Config.cmake /home/satyam/catkin_ws/devel/share/pkg_task2/cmake/pkg_task2Config.cmake

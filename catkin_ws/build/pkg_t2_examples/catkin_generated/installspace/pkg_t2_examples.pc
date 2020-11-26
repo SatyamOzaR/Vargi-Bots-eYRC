@@ -1,0 +1,8 @@
+prefix=/home/satyam/catkin_ws/install
+
+Name: pkg_t2_examples
+Description: Description of pkg_t2_examples
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

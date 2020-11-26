@@ -1,0 +1,1 @@
+/home/satyam/catkin_ws/devel/.private/gazebo_logical_camera/include/gazebo_logical_camera/LogicalCameraImage.h

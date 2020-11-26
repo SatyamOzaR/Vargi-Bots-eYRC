@@ -1,0 +1,63 @@
+[35m[1mScanning dependencies of target ur10_kin[0m
+[  8%] [32mBuilding CXX object CMakeFiles/ur10_kin.dir/src/ur_kin.cpp.o[0m
+[ 16%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/ur_kinematics/lib/libur10_kin.so[0m
+[ 16%] Built target ur10_kin
+[35m[1mScanning dependencies of target ur5_kin[0m
+[ 25%] [32mBuilding CXX object CMakeFiles/ur5_kin.dir/src/ur_kin.cpp.o[0m
+[ 33%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/ur_kinematics/lib/libur5_kin.so[0m
+[ 33%] Built target ur5_kin
+[35m[1mScanning dependencies of target ur3_kin[0m
+[ 41%] [32mBuilding CXX object CMakeFiles/ur3_kin.dir/src/ur_kin.cpp.o[0m
+[ 50%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/ur_kinematics/lib/libur3_kin.so[0m
+[ 50%] Built target ur3_kin
+[35m[1mScanning dependencies of target ur10_moveit_plugin[0m
+[ 58%] [32mBuilding CXX object CMakeFiles/ur10_moveit_plugin.dir/src/ur_moveit_plugin.cpp.o[0m
+In file included from [01m[K/home/satyam/catkin_ws/src/vb_simulation_pkgs/universal_robot/ur_kinematics/src/ur_moveit_plugin.cpp:75:0[m[K:
+[01m[K/opt/ros/melodic/include/class_loader/class_loader.h:36:2:[m[K [01;35m[Kwarning: [m[K#warning Including header <class_loader/class_loader.h> is deprecated, include <class_loader/class_loader.hpp> instead. [[01;35m[K-Wcpp[m[K]
+ #[01;35m[Kwarning[m[K Including header <class_loader/class_loader.h> is deprecated, \
+  [01;35m[K^~~~~~~[m[K
+[35m[1mScanning dependencies of target ur5_moveit_plugin[0m
+[ 66%] [32mBuilding CXX object CMakeFiles/ur5_moveit_plugin.dir/src/ur_moveit_plugin.cpp.o[0m
+In file included from [01m[K/home/satyam/catkin_ws/src/vb_simulation_pkgs/universal_robot/ur_kinematics/src/ur_moveit_plugin.cpp:75:0[m[K:
+[01m[K/opt/ros/melodic/include/class_loader/class_loader.h:36:2:[m[K [01;35m[Kwarning: [m[K#warning Including header <class_loader/class_loader.h> is deprecated, include <class_loader/class_loader.hpp> instead. [[01;35m[K-Wcpp[m[K]
+ #[01;35m[Kwarning[m[K Including header <class_loader/class_loader.h> is deprecated, \
+  [01;35m[K^~~~~~~[m[K
+[35m[1mScanning dependencies of target ur3_moveit_plugin[0m
+[ 75%] [32mBuilding CXX object CMakeFiles/ur3_moveit_plugin.dir/src/ur_moveit_plugin.cpp.o[0m
+In file included from [01m[K/home/satyam/catkin_ws/src/vb_simulation_pkgs/universal_robot/ur_kinematics/src/ur_moveit_plugin.cpp:75:0[m[K:
+[01m[K/opt/ros/melodic/include/class_loader/class_loader.h:36:2:[m[K [01;35m[Kwarning: [m[K#warning Including header <class_loader/class_loader.h> is deprecated, include <class_loader/class_loader.hpp> instead. [[01;35m[K-Wcpp[m[K]
+ #[01;35m[Kwarning[m[K Including header <class_loader/class_loader.h> is deprecated, \
+  [01;35m[K^~~~~~~[m[K
+[01m[K/home/satyam/catkin_ws/src/vb_simulation_pkgs/universal_robot/ur_kinematics/src/ur_moveit_plugin.cpp:[m[K In member function ‘[01m[Kvirtual bool ur_kinematics::URKinematicsPlugin::initialize(const string&, const string&, const string&, const string&, double)[m[K’:
+[01m[K/home/satyam/catkin_ws/src/vb_simulation_pkgs/universal_robot/ur_kinematics/src/ur_moveit_plugin.cpp:174:88:[m[K [01;35m[Kwarning: [m[K‘[01m[Kvirtual void kinematics::KinematicsBase::setValues(const string&, const string&, const string&, const string&, double)[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+   setValues(robot_description, group_name, base_frame, tip_frame, search_discretization[01;35m[K)[m[K;
+                                                                                        [01;35m[K^[m[K
+In file included from [01m[K/home/satyam/catkin_ws/src/vb_simulation_pkgs/universal_robot/ur_kinematics/include/ur_kinematics/ur_moveit_plugin.h:100:0[m[K,
+                 from [01m[K/home/satyam/catkin_ws/src/vb_simulation_pkgs/universal_robot/ur_kinematics/src/ur_moveit_plugin.cpp:88[m[K:
+[01m[K/opt/ros/melodic/include/moveit/kinematics_base/kinematics_base.h:344:31:[m[K [01;36m[Knote: [m[Kdeclared here
+   [[deprecated]] virtual void [01;36m[KsetValues[m[K(const std::string& robot_description, const std::string& group_name,
+                               [01;36m[K^~~~~~~~~[m[K
+[01m[K/home/satyam/catkin_ws/src/vb_simulation_pkgs/universal_robot/ur_kinematics/src/ur_moveit_plugin.cpp:[m[K In member function ‘[01m[Kvirtual bool ur_kinematics::URKinematicsPlugin::initialize(const string&, const string&, const string&, const string&, double)[m[K’:
+[01m[K/home/satyam/catkin_ws/src/vb_simulation_pkgs/universal_robot/ur_kinematics/src/ur_moveit_plugin.cpp:174:88:[m[K [01;35m[Kwarning: [m[K‘[01m[Kvirtual void kinematics::KinematicsBase::setValues(const string&, const string&, const string&, const string&, double)[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+   setValues(robot_description, group_name, base_frame, tip_frame, search_discretization[01;35m[K)[m[K;
+                                                                                        [01;35m[K^[m[K
+In file included from [01m[K/home/satyam/catkin_ws/src/vb_simulation_pkgs/universal_robot/ur_kinematics/include/ur_kinematics/ur_moveit_plugin.h:100:0[m[K,
+                 from [01m[K/home/satyam/catkin_ws/src/vb_simulation_pkgs/universal_robot/ur_kinematics/src/ur_moveit_plugin.cpp:88[m[K:
+[01m[K/opt/ros/melodic/include/moveit/kinematics_base/kinematics_base.h:344:31:[m[K [01;36m[Knote: [m[Kdeclared here
+   [[deprecated]] virtual void [01;36m[KsetValues[m[K(const std::string& robot_description, const std::string& group_name,
+                               [01;36m[K^~~~~~~~~[m[K
+[01m[K/home/satyam/catkin_ws/src/vb_simulation_pkgs/universal_robot/ur_kinematics/src/ur_moveit_plugin.cpp:[m[K In member function ‘[01m[Kvirtual bool ur_kinematics::URKinematicsPlugin::initialize(const string&, const string&, const string&, const string&, double)[m[K’:
+[01m[K/home/satyam/catkin_ws/src/vb_simulation_pkgs/universal_robot/ur_kinematics/src/ur_moveit_plugin.cpp:174:88:[m[K [01;35m[Kwarning: [m[K‘[01m[Kvirtual void kinematics::KinematicsBase::setValues(const string&, const string&, const string&, const string&, double)[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+   setValues(robot_description, group_name, base_frame, tip_frame, search_discretization[01;35m[K)[m[K;
+                                                                                        [01;35m[K^[m[K
+In file included from [01m[K/home/satyam/catkin_ws/src/vb_simulation_pkgs/universal_robot/ur_kinematics/include/ur_kinematics/ur_moveit_plugin.h:100:0[m[K,
+                 from [01m[K/home/satyam/catkin_ws/src/vb_simulation_pkgs/universal_robot/ur_kinematics/src/ur_moveit_plugin.cpp:88[m[K:
+[01m[K/opt/ros/melodic/include/moveit/kinematics_base/kinematics_base.h:344:31:[m[K [01;36m[Knote: [m[Kdeclared here
+   [[deprecated]] virtual void [01;36m[KsetValues[m[K(const std::string& robot_description, const std::string& group_name,
+                               [01;36m[K^~~~~~~~~[m[K
+[ 83%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/ur_kinematics/lib/libur10_moveit_plugin.so[0m
+[ 83%] Built target ur10_moveit_plugin
+[ 91%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/ur_kinematics/lib/libur5_moveit_plugin.so[0m
+[ 91%] Built target ur5_moveit_plugin
+[100%] [32m[1mLinking CXX shared library /home/satyam/catkin_ws/devel/.private/ur_kinematics/lib/libur3_moveit_plugin.so[0m
+[100%] Built target ur3_moveit_plugin

@@ -1,0 +1,2 @@
+pkg_task0
+/home/satyam/catkin_ws/devel/.private/pkg_task0/cmake.lock /home/satyam/catkin_ws/devel/./cmake.lock

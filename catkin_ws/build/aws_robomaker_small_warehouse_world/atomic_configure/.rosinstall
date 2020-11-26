@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/satyam/catkin_ws/devel/.private/aws_robomaker_small_warehouse_world/setup.sh

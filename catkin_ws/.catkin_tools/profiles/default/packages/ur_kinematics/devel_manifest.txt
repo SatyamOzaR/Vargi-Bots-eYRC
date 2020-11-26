@@ -1,0 +1,12 @@
+vb_simulation_pkgs/universal_robot/ur_kinematics
+/home/satyam/catkin_ws/devel/.private/ur_kinematics/cmake.lock /home/satyam/catkin_ws/devel/./cmake.lock
+/home/satyam/catkin_ws/devel/.private/ur_kinematics/lib/libur3_kin.so /home/satyam/catkin_ws/devel/lib/libur3_kin.so
+/home/satyam/catkin_ws/devel/.private/ur_kinematics/lib/libur10_moveit_plugin.so /home/satyam/catkin_ws/devel/lib/libur10_moveit_plugin.so
+/home/satyam/catkin_ws/devel/.private/ur_kinematics/lib/libur5_moveit_plugin.so /home/satyam/catkin_ws/devel/lib/libur5_moveit_plugin.so
+/home/satyam/catkin_ws/devel/.private/ur_kinematics/lib/libur3_moveit_plugin.so /home/satyam/catkin_ws/devel/lib/libur3_moveit_plugin.so
+/home/satyam/catkin_ws/devel/.private/ur_kinematics/lib/libur10_kin.so /home/satyam/catkin_ws/devel/lib/libur10_kin.so
+/home/satyam/catkin_ws/devel/.private/ur_kinematics/lib/libur5_kin.so /home/satyam/catkin_ws/devel/lib/libur5_kin.so
+/home/satyam/catkin_ws/devel/.private/ur_kinematics/lib/pkgconfig/ur_kinematics.pc /home/satyam/catkin_ws/devel/lib/pkgconfig/ur_kinematics.pc
+/home/satyam/catkin_ws/devel/.private/ur_kinematics/lib/python2.7/dist-packages/ur_kinematics/__init__.py /home/satyam/catkin_ws/devel/lib/python2.7/dist-packages/ur_kinematics/__init__.py
+/home/satyam/catkin_ws/devel/.private/ur_kinematics/share/ur_kinematics/cmake/ur_kinematicsConfig.cmake /home/satyam/catkin_ws/devel/share/ur_kinematics/cmake/ur_kinematicsConfig.cmake
+/home/satyam/catkin_ws/devel/.private/ur_kinematics/share/ur_kinematics/cmake/ur_kinematicsConfig-version.cmake /home/satyam/catkin_ws/devel/share/ur_kinematics/cmake/ur_kinematicsConfig-version.cmake

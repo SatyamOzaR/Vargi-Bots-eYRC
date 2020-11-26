@@ -1,0 +1,1 @@
+/home/satyam/catkin_ws/devel/.private/gazebo_conveyor/share/gazebo_conveyor/cmake/gazebo_conveyorConfig-version.cmake

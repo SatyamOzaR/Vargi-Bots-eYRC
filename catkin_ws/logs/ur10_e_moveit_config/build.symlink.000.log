@@ -1,0 +1,3 @@
+Symlinking /home/satyam/catkin_ws/devel/lib/pkgconfig/ur10_e_moveit_config.pc
+Symlinking /home/satyam/catkin_ws/devel/share/ur10_e_moveit_config/cmake/ur10_e_moveit_configConfig.cmake
+Symlinking /home/satyam/catkin_ws/devel/share/ur10_e_moveit_config/cmake/ur10_e_moveit_configConfig-version.cmake

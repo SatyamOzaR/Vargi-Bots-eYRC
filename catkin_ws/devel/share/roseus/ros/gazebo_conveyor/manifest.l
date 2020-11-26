@@ -1,0 +1,1 @@
+/home/satyam/catkin_ws/devel/.private/gazebo_conveyor/share/roseus/ros/gazebo_conveyor/manifest.l

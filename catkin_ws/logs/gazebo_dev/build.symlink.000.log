@@ -1,0 +1,3 @@
+Symlinking /home/satyam/catkin_ws/devel/lib/pkgconfig/gazebo_dev.pc
+Symlinking /home/satyam/catkin_ws/devel/share/gazebo_dev/cmake/gazebo_devConfig.cmake
+Symlinking /home/satyam/catkin_ws/devel/share/gazebo_dev/cmake/gazebo_devConfig-version.cmake

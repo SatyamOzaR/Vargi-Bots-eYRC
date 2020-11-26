@@ -1,0 +1,1 @@
+/home/satyam/catkin_ws/devel/.private/pkg_t2_examples/lib/pkgconfig/pkg_t2_examples.pc

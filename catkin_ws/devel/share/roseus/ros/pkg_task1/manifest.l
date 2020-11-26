@@ -1,0 +1,1 @@
+/home/satyam/catkin_ws/devel/.private/pkg_task1/share/roseus/ros/pkg_task1/manifest.l
