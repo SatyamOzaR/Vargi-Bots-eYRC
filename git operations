@@ -1,0 +1,22 @@
+1. from terminal cd.. to your workspace/folder
+ex: cd ~/catkin_ws
+2. initialize git
+git init
+3. add folder/files
+git add <file_name>
+4. add repository which was cloned into workspace previously
+git submodule add <repository_url>
+5.check status of files loaded
+git status
+6.configure user credentials
+git config --global user.email "<email_address>"
+git config --global user.name "<username>"
+7.commit to repo with message
+git commit -m "<message>"
+8.add url of blank repo or repo to which data to be added
+git remote add origin <url_of target_repo>
+ex: git remote add origin https://github.com/satyam4561/Vargi-bots.git
+9. push data
+git push -u origin <branch of repo>
+ex: git push -u origin main 
+or git push -u origin master
