@@ -17,5 +17,19 @@
 
     <!-- Run Conveyor Belt Service Server -->
     <node name= "node_service_server_conveyor_belt" pkg= "pkg_vb_sim" type="node_service_server_conveyor_belt.py" output="screen"/>
+
+    <!-- Launch Moveit Group Node -->
+    <include file = "$(find pkg_moveit_ur5_1)/launch/move_group.launch" /> 
+
+    <!-- Run RViz with Moveit! Pluging -->
+    <arg name="use_rviz" default="true" />
+
+    <include file="$(find pkg_moveit_ur5_1)/launch/moveit_rviz.launch" if="$(arg use_rviz)">
+        <arg name="rviz_config" value="$(find pkg_moveit_ur5_1)/launch/moveit.rviz"/>
+    </include>
+
+    <!-- Add Shelf to Moveit! Planning Scene in RViz -->
+    <arg name="scene_file" default="$(find pkg_task3)/config/rviz/task3.scene"/> 
+    <node name = "moveit_publish_scene_from_text" pkg= "moveit_ros_planning" type = "moveit_publish_scene_from_text" args= "$(arg scene_file)"/>
 	
 </launch>

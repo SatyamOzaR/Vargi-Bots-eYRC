@@ -84,38 +84,71 @@ def main():
     ur5 = Ur5Moveit()
 
     ur5_pose_1 = geometry_msgs.msg.Pose()
-    ur5_pose_1.position.x = -0.817261772949
-    ur5_pose_1.position.y = -0.109110076352
-    ur5_pose_1.position.z = 0.94446979642
-    ur5_pose_1.orientation.x = -0.999999995957
-    ur5_pose_1.orientation.y = 4.37354574363e-05
-    ur5_pose_1.orientation.z = 7.85715579538e-05
-    ur5_pose_1.orientation.w = 2.12177767514e-09
+    ur5_pose_1.position.x = -0.800328
+    ur5_pose_1.position.y = 0.0
+    ur5_pose_1.position.z = 1.19
+    ur5_pose_1.orientation.x = -0.5
+    ur5_pose_1.orientation.y = -0.5
+    ur5_pose_1.orientation.z = 0.5
+    ur5_pose_1.orientation.w = 0.5
 
     ur5_pose_2 = geometry_msgs.msg.Pose()
-    ur5_pose_2.position.x = -0.414925357653
-    ur5_pose_2.position.y = 0.284932768677
-    ur5_pose_2.position.z = 1.78027849967
-    ur5_pose_2.orientation.x = -0.199396929724
-    ur5_pose_2.orientation.y = 1.64394297608e-05
-    ur5_pose_2.orientation.z = 0.979918803013
-    ur5_pose_2.orientation.w = 6.03911583936e-05
+    ur5_pose_2.position.x = -0.660551
+    ur5_pose_2.position.y = 0.0
+    ur5_pose_2.position.z = 1.19
+    ur5_pose_2.orientation.x = -0.5
+    ur5_pose_2.orientation.y = -0.5
+    ur5_pose_2.orientation.z = 0.5
+    ur5_pose_2.orientation.w = 0.5
 
     ur5_pose_3 = geometry_msgs.msg.Pose()
-    ur5_pose_3.position.x = 0.061218702528
-    ur5_pose_3.position.y = 0.150917431354
-    ur5_pose_3.position.z = 1.20083763657
-    ur5_pose_3.orientation.x = 0.635613875737
-    ur5_pose_3.orientation.y = 0.77190802743
-    ur5_pose_3.orientation.z = 0.00233308772292
-    ur5_pose_3.orientation.w = 0.0121472162087
+    ur5_pose_3.position.x = -0.900551
+    ur5_pose_3.position.y = 0.0
+    ur5_pose_3.position.z = 1.19
+    ur5_pose_3.orientation.x = -0.5
+    ur5_pose_3.orientation.y = -0.5
+    ur5_pose_3.orientation.z = 0.5
+    ur5_pose_3.orientation.w = 0.5
+
+    ur5_pose_4 = geometry_msgs.msg.Pose()
+    ur5_pose_4.position.x = 0.11
+    ur5_pose_4.position.y = 0.65
+    ur5_pose_4.position.z = 1.19
+    ur5_pose_4.orientation.x = -0.5
+    ur5_pose_4.orientation.y = -0.5
+    ur5_pose_4.orientation.z = 0.5
+    ur5_pose_4.orientation.w = 0.5
+
+    ur5_pose_5 = geometry_msgs.msg.Pose()
+    ur5_pose_5.position.x = 0.75
+    ur5_pose_5.position.y = 0.03
+    ur5_pose_5.position.z = 1.19
+    ur5_pose_5.orientation.x = -0.5
+    ur5_pose_5.orientation.y = -0.5
+    ur5_pose_5.orientation.z = 0.5
+    ur5_pose_5.orientation.w = 0.5
+
+    ur5_pose_6 = geometry_msgs.msg.Pose()
+    ur5_pose_6.position.x = 0.04
+    ur5_pose_6.position.y = -0.65
+    ur5_pose_6.position.z = 1.19
+    ur5_pose_6.orientation.x = -0.5
+    ur5_pose_6.orientation.y = -0.5
+    ur5_pose_6.orientation.z = 0.5
+    ur5_pose_6.orientation.w = 0.5
 
     while not rospy.is_shutdown():
         ur5.go_to_pose(ur5_pose_1)
         rospy.sleep(2)
+        ur5.go_to_pose(ur5_pose_4)
+        rospy.sleep(2)
         ur5.go_to_pose(ur5_pose_2)
         rospy.sleep(2)
+        ur5.go_to_pose(ur5_pose_5)
+        rospy.sleep(2)
         ur5.go_to_pose(ur5_pose_3)
+        rospy.sleep(2)
+        ur5.go_to_pose(ur5_pose_6)
         rospy.sleep(2)
 
     del ur5

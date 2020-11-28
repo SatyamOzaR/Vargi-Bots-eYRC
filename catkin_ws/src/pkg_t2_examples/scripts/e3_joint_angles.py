@@ -82,34 +82,34 @@ def main():
 
     ur5 = Ur5Moveit()
 
-    lst_joint_angles_1 = [math.radians(42.22),
-                          math.radians(-85.49),
-                          math.radians(20.88),
-                          math.radians(-110.37),
-                          math.radians(-36.70),
-                          math.radians(180)]
+    lst_joint_angles_1 = [0.1368126657824078, 
+                          -2.4434224283208916, 
+                          -1.0156891362958236, 
+                          -1.2528798543218373, 
+                          1.5702248664652139, 
+                          0.13771248297512617]
 
-    lst_joint_angles_2 = [math.radians(133),
-                          math.radians(-59),
-                          math.radians(13),
-                          math.radians(-134),
-                          math.radians(47),
-                          math.radians(23)]
+    lst_joint_angles_2 = [0.16601150326278002, 
+                          -2.129564362416332, 
+                          -1.5760613901823861, 
+                          -1.0058675875435101, 
+                          1.5708121702651434, 
+                          0.16572381754962784]
 
-    lst_joint_angles_3 = [math.radians(-70),
-                          math.radians(-54),
-                          math.radians(-139),
-                          math.radians(-174),
-                          math.radians(9),
-                          math.radians(6)]
+    lst_joint_angles_3 = [0.12152437217798262, 
+                          -2.8615298666738616, 
+                          -0.19500904060152457, 
+                          -1.655438579343012, 
+                          1.5704979825500027, 
+                          0.12215957009259792]
 
     while not rospy.is_shutdown():
         ur5.set_joint_angles(lst_joint_angles_1)
         rospy.sleep(2)
-        #ur5.set_joint_angles(lst_joint_angles_2)
-        #rospy.sleep(2)
-        #ur5.set_joint_angles(lst_joint_angles_3)
-        #rospy.sleep(2)
+        ur5.set_joint_angles(lst_joint_angles_2)
+        rospy.sleep(2)
+        ur5.set_joint_angles(lst_joint_angles_3)
+        rospy.sleep(2)
 
     del ur5
 
