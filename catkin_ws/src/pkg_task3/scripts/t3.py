@@ -12,6 +12,7 @@ import math
 
 from pkg_vb_sim.srv import vacuumGripper
 from pkg_vb_sim.srv import conveyorBeltPowerMsg
+from pkg_vb_sim.msg import LogicalCameraImage
 
 
 class Ur5Moveit:
@@ -89,6 +90,42 @@ class Ur5Moveit:
         self.eef_link = self.group.get_end_effector_link()
         self.scene.attach_box(self.eef_link, self._box_name )
 
+    def remove_box(self, object_name):
+
+        self.box_name = object_name
+
+        self.scene = moveit_commander.PlanningSceneInterface()
+        self.eef_link = self.group.get_end_effector_link()
+
+        self.scene.remove_attached_object(self.eef_link, name=self.box_name)
+        rospy.sleep(2)
+        self.scene.remove_world_object(self.box_name)
+
+
+    def go_to_predefined_pose(self, arg_pose_name):
+
+        rospy.loginfo('\033[94m' + "Going to Pose: {}".format(arg_pose_name) + '\033[0m')
+
+        self._group.set_named_target(arg_pose_name)
+
+        plan = self._group.plan()
+        goal = moveit_msgs.msg.ExecuteTrajectoryGoal()
+
+        goal.trajectory = plan
+        self._exectute_trajectory_client.send_goal(goal)
+        self._exectute_trajectory_client.wait_for_result()
+
+        rospy.loginfo('\033[94m' + "Now at Pose: {}".format(arg_pose_name) + '\033[0m')
+
+    def callback_topic_subscription(self, x_msg):
+
+    	number_models = len(x_msg.models)
+
+    	for i in range(0, number_models):
+    		name_model = x_msg.models[i].type
+    		
+    		
+
     # Destructor
     def __del__(self):
         moveit_commander.roscpp_shutdown()
@@ -154,36 +191,50 @@ def main():
     ur5_pose_blue_bin.orientation.z = 0.5
     ur5_pose_blue_bin.orientation.w = 0.5
 
-    while not rospy.is_shutdown():
+    red_box_spawn_rviz_pose = geometry_msgs.msg.Pose()
+    red_box_spawn_rviz_pose.position.x = -0.800328
+    red_box_spawn_rviz_pose.position.y = 0.0
+    red_box_spawn_rviz_pose.position.z = 1
 
-    	cb_req = rospy.ServiceProxy('/eyrc/vb/conveyor/set_power', conveyorBeltPowerMsg)
-    	power_req = 11
-    	r = cb_req(power_req)
-    	cb_req.wait_for_service()
+    green_box_spawn_rviz_pose = geometry_msgs.msg.Pose()
+    green_box_spawn_rviz_pose.position.x = -0.660551
+    green_box_spawn_rviz_pose.position.y = 0.0
+    green_box_spawn_rviz_pose.position.z = 1
 
-    	rospy.Subscriber('/eyrc/vb/logical_camera_2', LogicalCameraImage, ur5.callback_topic_subscription)
+    blue_box_spawn_rviz_pose = geometry_msgs.msg.Pose()
+    blue_box_spawn_rviz_pose.position.x = -0.900551
+    blue_box_spawn_rviz_pose.position.y = 0.0
+    blue_box_spawn_rviz_pose.position.z = 1
+    
+
+    cb_req = rospy.ServiceProxy('/eyrc/vb/conveyor/set_power', conveyorBeltPowerMsg)
+    power_req = 11
+    r = cb_req(power_req)
+    cb_req.wait_for_service()
+
+    rospy.Subscriber('/eyrc/vb/logical_camera_2', LogicalCameraImage, ur5.callback_topic_subscription)
     	
-        ur5.go_to_pose(ur5_pose_red_box)
-        rospy.sleep(2)
+    ur5.go_to_pose(ur5_pose_red_box)
+    rospy.sleep(2)
 
-        vg_req = rospy.ServiceProxy('/eyrc/vb/ur5_1/activate_vacuum_gripper', vacuumGripper)
-    	req = True
-    	q = vg_req(req)
-    	vg_req.wait_for_service()
+    vg_req = rospy.ServiceProxy('/eyrc/vb/ur5_1/activate_vacuum_gripper', vacuumGripper)
+    req = True
+    q = vg_req(req)
+    vg_req.wait_for_service()
 
-    	package_name = "packagen1"
-    	ur5.add_box(box_pose, package_name)
+    package_name = "packagen1"
+    ur5.add_box(red_box_spawn_rviz_pose, package_name)
 
-        ur5.go_to_pose(ur5_pose_red_bin)
-        rospy.sleep(2)
-        ur5.go_to_pose(ur5_pose_green_box)
-        rospy.sleep(2)
-        ur5.go_to_pose(ur5_pose_green_bin)
-        rospy.sleep(2)
-        ur5.go_to_pose(ur5_pose_blue_box)
-        rospy.sleep(2)
-        ur5.go_to_pose(ur5_pose_blue_bin)
-        rospy.sleep(2)
+    ur5.go_to_pose(ur5_pose_red_bin)
+    rospy.sleep(2)
+    ur5.go_to_pose(ur5_pose_green_box)
+    rospy.sleep(2)
+    ur5.go_to_pose(ur5_pose_green_bin)
+    rospy.sleep(2)
+    ur5.go_to_pose(ur5_pose_blue_box)
+    rospy.sleep(2)
+    ur5.go_to_pose(ur5_pose_blue_bin)
+    rospy.sleep(2)
 
     del ur5
 
