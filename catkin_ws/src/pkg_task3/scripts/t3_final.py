@@ -155,9 +155,7 @@ class Ur5Moveit:
 
 		vg_req = rospy.ServiceProxy('/eyrc/vb/ur5_1/activate_vacuum_gripper', vacuumGripper)
 
-		power_req = 11
-		r = cb_req(power_req)
-		cb_req.wait_for_service()
+		
 		
 
 		box_length = 0.15               # Length of the Package
@@ -228,7 +226,7 @@ class Ur5Moveit:
 			box_spawn_rviz.header.frame_id = "world"
 
 
-			if(name_model == 'packagen1' and pos.position.y == 0.0):
+			if(name_model == 'packagen1' and 0<pos.position.y <0.1):
 
 
 				power_req = 0
@@ -313,7 +311,11 @@ class Ur5Moveit:
 
 				remove_box(name_model)
 
-				del ur5
+				del ur
+			else:
+				power_req = 11
+				r = cb_req(power_req)
+				cb_req.wait_for_service()
 
 	# Destructor
 	def __del__(self):
