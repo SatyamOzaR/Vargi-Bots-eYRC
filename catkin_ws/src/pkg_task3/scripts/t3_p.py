@@ -156,17 +156,17 @@ class Ur5Moveit:
 			name_model = x_msg.models[i].type
 			pos = x_msg.models[i].pose
 
-			if(name_model == 'packagen1' and (pos.position.y >= 0.03 and pos.position.y <0.05) and flag1 == 0):
+			if(name_model == 'packagen1' and (pos.position.y >= -0.01and pos.position.y <0.01) and flag1 == 0):
 				print 'ready to pick red box'
 				flag1 == 1
 				red_flag = 1
 
-			elif(name_model == 'packagen2' and (pos.position.y >= 0.03 and pos.position.y <0.05) and flag2 == 0):
+			elif(name_model == 'packagen2' and (pos.position.y >= -0.01 and pos.position.y <0.01) and flag2 == 0):
 				print 'ready to pick green box'
 				flag2 == 1
 				green_flag = 1
 					
-			elif(name_model == 'packagen3' and (pos.position.y >= 0.03 and pos.position.y <0.05) and flag3 == 0):
+			elif(name_model == 'packagen3' and (pos.position.y >= -0.01 and pos.position.y <0.01) and flag3 == 0):
 				print 'ready to pick blue box'
 				flag3 = 1
 				blue_flag = 1
@@ -251,19 +251,19 @@ def main():
 	red_box_spawn_rviz = geometry_msgs.msg.PoseStamped()
 	red_box_spawn_rviz.pose.position.x = -0.800328
 	red_box_spawn_rviz.pose.position.y = 0.0
-	red_box_spawn_rviz.pose.position.z = 1.01
+	red_box_spawn_rviz.pose.position.z = 0.998
 	red_box_spawn_rviz.header.frame_id = "world"
 
 	green_box_spawn_rviz = geometry_msgs.msg.PoseStamped()
 	green_box_spawn_rviz.pose.position.x = -0.660551
 	green_box_spawn_rviz.pose.position.y = 0.0
-	green_box_spawn_rviz.pose.position.z = 1.01
+	green_box_spawn_rviz.pose.position.z = 0.998
 	green_box_spawn_rviz.header.frame_id = "world"
 
 	blue_box_spawn_rviz = geometry_msgs.msg.PoseStamped()
 	blue_box_spawn_rviz.pose.position.x = -0.900551
 	blue_box_spawn_rviz.pose.position.y = 0.0
-	blue_box_spawn_rviz.pose.position.z = 1.01
+	blue_box_spawn_rviz.pose.position.z = 0.998
 	blue_box_spawn_rviz.header.frame_id = "world"
 
 	power_req = 20
@@ -300,7 +300,7 @@ def main():
 
 	ur5.remove_box(name1)
 
-	
+	rospy.sleep(3)
 
 	power_req = 20
 	r = cb_req(power_req)
@@ -311,7 +311,7 @@ def main():
 	#								ur5_pose_green_box.position.y-pose_red_bin.position.y,
 	#								ur5_pose_green_box.position.z-pose_red_bin.position.z)
 	ur5.go_to_pose(ur5_pose_green_box)
-	rospy.sleep(3)
+	#rospy.sleep(3)
 
 
 	while green_flag == 0:
@@ -327,10 +327,10 @@ def main():
 
 	name1 = 'packagen2'
 	ur5.add_box(green_box_spawn_rviz, name1)
-	rospy.sleep(4)
+	rospy.sleep(2)
 
 	ur5.go_to_pose(pose_green_bin)
-	rospy.sleep(4)
+	rospy.sleep(2)
 
 	req = False
 	q = vg_req(req)
@@ -338,14 +338,14 @@ def main():
 
 	ur5.remove_box(name1)
 
-	
+	rospy.sleep(2)
 
 	power_req = 20
 	r = cb_req(power_req)
 	cb_req.wait_for_service()
 
 	ur5.go_to_pose(ur5_pose_blue_box)
-	rospy.sleep(4)
+	#rospy.sleep(4)
 	
 	while blue_flag == 0:
 		{}
@@ -362,13 +362,13 @@ def main():
 
 	name1 = 'packagen3'
 	ur5.add_box(blue_box_spawn_rviz, name1)
-	rospy.sleep(4)
+	rospy.sleep(2)
 
 	#ur5.ee_cartesian_translation(ur5_pose_blue_box.position.x-pose_blue_bin.position.x,
 	#				ur5_pose_blue_box.position.y-pose_blue_bin.position.y,
 	#				ur5_pose_blue_box.position.z-pose_blue_bin.position.z)
 	ur5.go_to_pose(pose_blue_bin)
-	rospy.sleep(3)
+	rospy.sleep(2)
 
 	req = False
 	q = vg_req(req)
