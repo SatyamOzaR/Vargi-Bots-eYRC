@@ -148,6 +148,9 @@ class Ur5Moveit:
 		global red_flag
 		global green_flag
 		global blue_flag
+		global flag1
+		global flag2
+		global flag3
 		
 		number_models = len(x_msg.models)
 
@@ -300,7 +303,7 @@ def main():
 
 	ur5.remove_box(name1)
 
-	rospy.sleep(3)
+	#rospy.sleep(2)
 
 	power_req = 20
 	r = cb_req(power_req)
@@ -338,14 +341,14 @@ def main():
 
 	ur5.remove_box(name1)
 
-	rospy.sleep(2)
+	#rospy.sleep(2)
 
 	power_req = 20
 	r = cb_req(power_req)
 	cb_req.wait_for_service()
 
 	ur5.go_to_pose(ur5_pose_blue_box)
-	#rospy.sleep(4)
+	rospy.sleep(2)
 	
 	while blue_flag == 0:
 		{}
