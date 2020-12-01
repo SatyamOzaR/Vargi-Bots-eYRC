@@ -21,85 +21,6 @@ flag1 = 0
 flag2 = 0
 flag3 =0
 
-box_length = 0.15
-vacuum_gripper_width = 0.115
-delta = vacuum_gripper_width + (box_length/2)
-
-ur5_pose_red_box = geometry_msgs.msg.Pose()
-ur5_pose_red_box.position.x = -0.800328
-ur5_pose_red_box.position.y = 0.0
-ur5_pose_red_box.position.z = 1+delta
-ur5_pose_red_box.orientation.x = -0.5
-ur5_pose_red_box.orientation.y = -0.5
-ur5_pose_red_box.orientation.z = 0.5
-ur5_pose_red_box.orientation.w = 0.5
-
-ur5_pose_green_box = geometry_msgs.msg.Pose()
-ur5_pose_green_box.position.x = -0.660551
-ur5_pose_green_box.position.y = 0.0
-ur5_pose_green_box.position.z = 1+delta
-ur5_pose_green_box.orientation.x = -0.5
-ur5_pose_green_box.orientation.y = -0.5
-ur5_pose_green_box.orientation.z = 0.5
-ur5_pose_green_box.orientation.w = 0.5
-
-ur5_pose_blue_box = geometry_msgs.msg.Pose()
-ur5_pose_blue_box.position.x = -0.900551
-ur5_pose_blue_box.position.y = 0.0
-ur5_pose_blue_box.position.z = 1+delta
-ur5_pose_blue_box.orientation.x = -0.5
-ur5_pose_blue_box.orientation.y = -0.5
-ur5_pose_blue_box.orientation.z = 0.5
-ur5_pose_blue_box.orientation.w = 0.5
-
-pose_red_bin = geometry_msgs.msg.Pose()
-pose_red_bin.position.x = 0.11
-pose_red_bin.position.y = 0.65
-pose_red_bin.position.z = 1+delta
-#pose_red_bin.orientation.x = -0.5
-#pose_red_bin.orientation.y = -0.5
-#pose_red_bin.orientation.z = 0.5
-#pose_red_bin.orientation.w = 0.5
-
-pose_green_bin = geometry_msgs.msg.Pose()
-pose_green_bin.position.x = 0.75
-pose_green_bin.position.y = 0.03
-pose_green_bin.position.z = 1+delta
-#pose_green_bin.orientation.x = -0.5
-#pose_green_bin.orientation.y = -0.5
-#pose_green_bin.orientation.z = 0.5
-#pose_green_bin.orientation.w = 0.5
-
-pose_blue_bin = geometry_msgs.msg.Pose()
-pose_blue_bin.position.x = 0.04
-pose_blue_bin.position.y = -0.65
-pose_blue_bin.position.z = 1+delta
-#pose_blue_bin.orientation.x = -0.5
-#pose_blue_bin.orientation.y = -0.5
-#pose_blue_bin.orientation.z = 0.5
-#pose_blue_bin.orientation.w = 0.5
-
-red_box_spawn_rviz = geometry_msgs.msg.PoseStamped()
-red_box_spawn_rviz.pose.position.x = -0.800328
-red_box_spawn_rviz.pose.position.y = 0.0
-red_box_spawn_rviz.pose.position.z = 1.01
-red_box_spawn_rviz.header.frame_id = "world"
-
-green_box_spawn_rviz = geometry_msgs.msg.PoseStamped()
-green_box_spawn_rviz.pose.position.x = -0.660551
-green_box_spawn_rviz.pose.position.y = 0.0
-green_box_spawn_rviz.pose.position.z = 1.01
-green_box_spawn_rviz.header.frame_id = "world"
-
-blue_box_spawn_rviz = geometry_msgs.msg.PoseStamped()
-blue_box_spawn_rviz.pose.position.x = -0.900551
-blue_box_spawn_rviz.pose.position.y = 0.0
-blue_box_spawn_rviz.pose.position.z = 1.01
-blue_box_spawn_rviz.header.frame_id = "world"
-
-cb_req = rospy.ServiceProxy('/eyrc/vb/conveyor/set_power', conveyorBeltPowerMsg)
-
-vg_req = rospy.ServiceProxy('/eyrc/vb/ur5_1/activate_vacuum_gripper', vacuumGripper)
 
 
 
@@ -166,31 +87,35 @@ class Ur5Moveit:
 
 		return flag_plan
 
-	def go_to_pose(self, arg_pose):
+	def ee_cartesian_translation(self, trans_x, trans_y, trans_z):
 
-		pose_values = self._group.get_current_pose().pose
-		rospy.loginfo('\033[94m' + ">>> Current Pose:" + '\033[0m')
-		rospy.loginfo(pose_values)
+		waypoints = []
 
-		self._group.set_pose_target(arg_pose)
-		flag_plan = self._group.go(wait=True)  # wait=False for Async Move
+		waypoints.append(self._group.get_current_pose().pose)
 
-		pose_values = self._group.get_current_pose().pose
-		rospy.loginfo('\033[94m' + ">>> Final Pose:" + '\033[0m')
-		rospy.loginfo(pose_values)
+		wpose = geometry_msgs.msg.Pose()
+		wpose.position.x = waypoints[0].position.x + (trans_x)  
+		wpose.position.y = waypoints[0].position.y + (trans_y)  
+		wpose.position.z = waypoints[0].position.z + (trans_z)
+		wpose.orientation.x = -0.5
+		wpose.orientation.y = -0.5
+		wpose.orientation.z = 0.5
+		wpose.orientation.w = 0.5
 
-		list_joint_values = self._group.get_current_joint_values()
-		rospy.loginfo('\033[94m' + ">>> Final Joint Values:" + '\033[0m')
-		rospy.loginfo(list_joint_values)
+		waypoints.append(copy.deepcopy(wpose))
 
-		if (flag_plan == True):
-			rospy.loginfo(
-				'\033[94m' + ">>> go_to_pose() Success" + '\033[0m')
-		else:
-			rospy.logerr(
-				'\033[94m' + ">>> go_to_pose() Failed. Solution for Pose not Found." + '\033[0m')
+		(plan, fraction) = self._group.compute_cartesian_path(
+			waypoints,   # waypoints to follow
+			0.01,        # Step Size, distance between two adjacent computed waypoints will be 1 cm
+			0.0)         # Jump Threshold
+		rospy.loginfo("Path computed successfully. Moving the arm.")
 
-		return flag_plan
+		num_pts = len(plan.joint_trajectory.points)
+		if (num_pts >= 3):
+			del plan.joint_trajectory.points[0]
+			del plan.joint_trajectory.points[1]
+
+		self._group.execute(plan)
 
 	def add_box(self, pose1, name):
 
@@ -207,24 +132,23 @@ class Ur5Moveit:
 
 	def remove_box(self, object_name):
 
+		
 		self.box_name = object_name
 
 		self.scene = moveit_commander.PlanningSceneInterface()
 		self.eef_link = self.group.get_end_effector_link()
 
 		self.scene.remove_attached_object(self.eef_link, name=self.box_name)
-		rospy.sleep(2)
+		
 		self.scene.remove_world_object(self.box_name)
 
+		
 	def callback_topic_subscription(self, x_msg):
 
 		global red_flag
 		global green_flag
 		global blue_flag
-		global flag1
-		global flag2
-		global flag3
-
+		
 		number_models = len(x_msg.models)
 
 		for i in range(0, number_models):
@@ -232,30 +156,21 @@ class Ur5Moveit:
 			name_model = x_msg.models[i].type
 			pos = x_msg.models[i].pose
 
-			if(name_model == 'packagen1' and (pos.position.y >= 0.0 and pos.position.y <0.05)):
-				if(flag1  == 0):
-					print 'ready to pick red box'
-					power_req = 0
-					r = cb_req(power_req)
-					flag1 == 1
-					red_flag = 1
-					cb_req.wait_for_service()
-			elif(name_model == 'packagen2' and (pos.position.y >= 0.0 and pos.position.y <0.05)):
-				if(flag2  == 0):
-					print 'ready to pick green box'
-					power_req = 0
-					r = cb_req(power_req)
-					flag2 == 1
-					green_flag = 1
-					cb_req.wait_for_service()
-			elif(name_model == 'packagen3' and (pos.position.y >= 0.0 and pos.position.y <0.05)):
-				if(flag3 == 0):
-					print 'ready to pick blue box'
-					power_req = 0
-					r = cb_req(power_req)
-					flag3 = 1
-					blue_flag = 1
-					cb_req.wait_for_service()
+			if(name_model == 'packagen1' and (pos.position.y >= 0.03 and pos.position.y <0.05) and flag1 == 0):
+				print 'ready to pick red box'
+				flag1 == 1
+				red_flag = 1
+
+			elif(name_model == 'packagen2' and (pos.position.y >= 0.03 and pos.position.y <0.05) and flag2 == 0):
+				print 'ready to pick green box'
+				flag2 == 1
+				green_flag = 1
+					
+			elif(name_model == 'packagen3' and (pos.position.y >= 0.03 and pos.position.y <0.05) and flag3 == 0):
+				print 'ready to pick blue box'
+				flag3 = 1
+				blue_flag = 1
+					
 
 
 
@@ -270,16 +185,100 @@ def main():
 
 	ur5 = Ur5Moveit()
 
-	rospy.Subscriber('/eyrc/vb/logical_camera_2', LogicalCameraImage, ur5.callback_topic_subscription)
+	cb_req = rospy.ServiceProxy('/eyrc/vb/conveyor/set_power', conveyorBeltPowerMsg)
 
-	power_req = 50
+	vg_req = rospy.ServiceProxy('/eyrc/vb/ur5_1/activate_vacuum_gripper', vacuumGripper)
+
+	rospy.Subscriber('/eyrc/vb/logical_camera_2', LogicalCameraImage, ur5.callback_topic_subscription)
+	box_length = 0.15
+	vacuum_gripper_width = 0.115
+	delta = vacuum_gripper_width + (box_length/2)
+
+	ur5_pose_red_box = geometry_msgs.msg.Pose()
+	ur5_pose_red_box.position.x = -0.800328
+	ur5_pose_red_box.position.y = 0.0
+	ur5_pose_red_box.position.z = 1+delta
+	ur5_pose_red_box.orientation.x = -0.5
+	ur5_pose_red_box.orientation.y = -0.5
+	ur5_pose_red_box.orientation.z = 0.5
+	ur5_pose_red_box.orientation.w = 0.5
+
+	ur5_pose_green_box = geometry_msgs.msg.Pose()
+	ur5_pose_green_box.position.x = -0.660551
+	ur5_pose_green_box.position.y = 0.0
+	ur5_pose_green_box.position.z = 1+delta
+	ur5_pose_green_box.orientation.x = -0.5
+	ur5_pose_green_box.orientation.y = -0.5
+	ur5_pose_green_box.orientation.z = 0.5
+	ur5_pose_green_box.orientation.w = 0.5
+
+	ur5_pose_blue_box = geometry_msgs.msg.Pose()
+	ur5_pose_blue_box.position.x = -0.900551
+	ur5_pose_blue_box.position.y = 0.0
+	ur5_pose_blue_box.position.z = 1+delta
+	ur5_pose_blue_box.orientation.x = -0.5
+	ur5_pose_blue_box.orientation.y = -0.5
+	ur5_pose_blue_box.orientation.z = 0.5
+	ur5_pose_blue_box.orientation.w = 0.5
+
+	pose_red_bin = geometry_msgs.msg.Pose()
+	pose_red_bin.position.x = 0.11
+	pose_red_bin.position.y = 0.65
+	pose_red_bin.position.z = 1+delta
+	#pose_red_bin.orientation.x = -0.5
+	#pose_red_bin.orientation.y = -0.5
+	#pose_red_bin.orientation.z = 0.5
+	#pose_red_bin.orientation.w = 0.5
+
+	pose_green_bin = geometry_msgs.msg.Pose()
+	pose_green_bin.position.x = 0.75
+	pose_green_bin.position.y = 0.03
+	pose_green_bin.position.z = 1+delta
+	#pose_green_bin.orientation.x = -0.5
+	#pose_green_bin.orientation.y = -0.5
+	#pose_green_bin.orientation.z = 0.5
+	#pose_green_bin.orientation.w = 0.5
+
+	pose_blue_bin = geometry_msgs.msg.Pose()
+	pose_blue_bin.position.x = 0.04
+	pose_blue_bin.position.y = -0.65
+	pose_blue_bin.position.z = 1+delta
+	#pose_blue_bin.orientation.x = -0.5
+	#pose_blue_bin.orientation.y = -0.5
+	#pose_blue_bin.orientation.z = 0.5
+	#pose_blue_bin.orientation.w = 0.5
+
+	red_box_spawn_rviz = geometry_msgs.msg.PoseStamped()
+	red_box_spawn_rviz.pose.position.x = -0.800328
+	red_box_spawn_rviz.pose.position.y = 0.0
+	red_box_spawn_rviz.pose.position.z = 1.01
+	red_box_spawn_rviz.header.frame_id = "world"
+
+	green_box_spawn_rviz = geometry_msgs.msg.PoseStamped()
+	green_box_spawn_rviz.pose.position.x = -0.660551
+	green_box_spawn_rviz.pose.position.y = 0.0
+	green_box_spawn_rviz.pose.position.z = 1.01
+	green_box_spawn_rviz.header.frame_id = "world"
+
+	blue_box_spawn_rviz = geometry_msgs.msg.PoseStamped()
+	blue_box_spawn_rviz.pose.position.x = -0.900551
+	blue_box_spawn_rviz.pose.position.y = 0.0
+	blue_box_spawn_rviz.pose.position.z = 1.01
+	blue_box_spawn_rviz.header.frame_id = "world"
+
+	power_req = 20
 	r = cb_req(power_req)
 	cb_req.wait_for_service()
 
+	ur5.go_to_pose(ur5_pose_red_box)
+	rospy.sleep(2)
+
 	while red_flag == 0:
 		{}
-	ur5.go_to_pose(ur5_pose_red_box)
-	rospy.sleep(4)
+
+	power_req = 0
+	r = cb_req(power_req)
+	cb_req.wait_for_service()
 
 	req = True
 	q = vg_req(req)
@@ -287,10 +286,13 @@ def main():
 
 	name1 = 'packagen1'
 	ur5.add_box(red_box_spawn_rviz, name1)
-	rospy.sleep(4)
+	rospy.sleep(2)
 
+	#ur5.ee_cartesian_translation(pose_red_bin.position.x-ur5_pose_red_box.position.x,
+	#								pose_red_bin.position.y-ur5_pose_red_box.position.y,
+	#								pose_red_bin.position.z-ur5_pose_red_box.position.z)
 	ur5.go_to_pose(pose_red_bin)
-	rospy.sleep(4)
+	rospy.sleep(2)
 
 	req = False
 	q = vg_req(req)
@@ -298,15 +300,26 @@ def main():
 
 	ur5.remove_box(name1)
 
-	power_req = 50
+	
+
+	power_req = 20
 	r = cb_req(power_req)
 	cb_req.wait_for_service()
 
 
+	#ur5.ee_cartesian_translation(ur5_pose_green_box.position.x-pose_red_bin.position.x,
+	#								ur5_pose_green_box.position.y-pose_red_bin.position.y,
+	#								ur5_pose_green_box.position.z-pose_red_bin.position.z)
+	ur5.go_to_pose(ur5_pose_green_box)
+	rospy.sleep(3)
+
+
 	while green_flag == 0:
 		{}
-	ur5.go_to_pose(ur5_pose_green_box)
-	rospy.sleep(4)
+	
+	power_req = 0
+	r = cb_req(power_req)
+	cb_req.wait_for_service()
 
 	req = True
 	q = vg_req(req)
@@ -325,16 +338,23 @@ def main():
 
 	ur5.remove_box(name1)
 
-	power_req = 50
+	
+
+	power_req = 20
 	r = cb_req(power_req)
 	cb_req.wait_for_service()
 
-
+	ur5.go_to_pose(ur5_pose_blue_box)
+	rospy.sleep(4)
 	
 	while blue_flag == 0:
 		{}
-	ur5.go_to_pose(ur5_pose_blue_box)
-	rospy.sleep(4)
+
+	power_req = 0
+	r = cb_req(power_req)
+	cb_req.wait_for_service()
+
+	
 
 	req = True
 	q = vg_req(req)
@@ -344,8 +364,11 @@ def main():
 	ur5.add_box(blue_box_spawn_rviz, name1)
 	rospy.sleep(4)
 
+	#ur5.ee_cartesian_translation(ur5_pose_blue_box.position.x-pose_blue_bin.position.x,
+	#				ur5_pose_blue_box.position.y-pose_blue_bin.position.y,
+	#				ur5_pose_blue_box.position.z-pose_blue_bin.position.z)
 	ur5.go_to_pose(pose_blue_bin)
-	rospy.sleep(4)
+	rospy.sleep(3)
 
 	req = False
 	q = vg_req(req)
@@ -353,6 +376,7 @@ def main():
 
 	ur5.remove_box(name1)
 
+	
 	del ur5
 
 
