@@ -332,8 +332,7 @@ def main():
 	rospy.Subscriber('/eyrc/vb/logical_camera_2', LogicalCameraImage, ur5.callback_topic_subscription)
 
 	while not rospy.is_shutdown():
-		print 'chutiya'
-
+		{}
 
 if __name__ == '__main__':
 	main()
