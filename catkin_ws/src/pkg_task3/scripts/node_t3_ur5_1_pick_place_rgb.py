@@ -264,7 +264,7 @@ def main():
 
     # requesting the conveyor-power server to activate for defined power
 
-    power_req = 20
+    power_req = 40
     r = cb_req(power_req)
     cb_req.wait_for_service()
 
@@ -293,7 +293,7 @@ def main():
 
     name1 = 'packagen1'
     ur5.add_box(red_box_spawn_rviz, name1)
-    rospy.sleep(2)
+    
 
     # make ur5 arm to head towards the red bin pose
 
@@ -311,7 +311,7 @@ def main():
 
     # activating conveyor-belt
 
-    power_req = 20
+    power_req = 30
     r = cb_req(power_req)
     cb_req.wait_for_service()
 
@@ -340,7 +340,7 @@ def main():
 
     name1 = 'packagen2'
     ur5.add_box(green_box_spawn_rviz, name1)
-    rospy.sleep(2)
+    
 
     # make ur5 arm to head towards the green bin pose
 
@@ -358,7 +358,7 @@ def main():
 
     # activating conveyor-belt
 
-    power_req = 20
+    power_req = 25
     r = cb_req(power_req)
     cb_req.wait_for_service()
 
@@ -387,7 +387,7 @@ def main():
 
     name1 = 'packagen3'
     ur5.add_box(blue_box_spawn_rviz, name1)
-    rospy.sleep(2)
+    
 
     # make ur5 arm to head towards the blue pin pose
 
