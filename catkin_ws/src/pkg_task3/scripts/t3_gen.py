@@ -66,7 +66,7 @@ class Ur5Moveit:
 
 	def __init__(self):
 
-		rospy.init_node('node_t3_ur5_1_pick_place_rgb.py',
+		rospy.init_node('node_t3_ur5_1_pick_place_rgb',
 						anonymous=True)
 
 		self._planning_group = 'ur5_1_planning_group'
@@ -213,10 +213,9 @@ class Ur5Moveit:
 
 			if name_model == 'packagen1' and pos.position.y >= -0.01 \
 				and pos.position.y < 0.01 and flag1 == 0:
-				ur5_pose_box.position.x = pos.position.x-9
+				ur5_pose_box.position.x = pos.position.z-0.8
 				ur5_pose_box.position.y = pos.position.y
-				ur5_pose_box.position.z = pos.position.z+delta+1
-				print ur5_pose_box
+				ur5_pose_box.position.z = pos.position.x+delta
 				box_info = name_model
 
 				print 'ready to pick red box'
@@ -224,22 +223,21 @@ class Ur5Moveit:
 				red_flag = 1
 			elif name_model == 'packagen2' and pos.position.y >= -0.01 \
 				and pos.position.y < 0.01 and flag2 == 0:
-				ur5_pose_box.position.x = pos.position.x-9
+				ur5_pose_box.position.x = pos.position.z-0.8
 				ur5_pose_box.position.y = pos.position.y
-				ur5_pose_box.position.z = pos.position.z+delta+1
+				ur5_pose_box.position.z = pos.position.x+delta
 				box_info = name_model
-				print ur5_pose_box
 				print 'ready to pick green box'
 				flag2 == 1
 				green_flag = 1
 			elif name_model == 'packagen3' and pos.position.y >= -0.01 \
 				and pos.position.y < 0.01 and flag3 == 0:
-				ur5_pose_box.position.x = pos.position.x-9
+				ur5_pose_box.position.x = pos.position.z-0.8
 				ur5_pose_box.position.y = pos.position.y
-				ur5_pose_box.position.z = pos.position.z+delta+1
+				ur5_pose_box.position.z = pos.position.x+delta
 				box_info = name_model
 				print ur5_pose_box
-				print 'ready to pick blue box'
+
 				flag3 = 1
 				blue_flag = 1
 
@@ -277,7 +275,7 @@ def main():
 
 	ur5.pick_place(ur5_pose_box, pose_red_bin, box_info)
 
-	power_req = 30
+	power_req = 20
 	r = cb_req(power_req)
 	cb_req.wait_for_service()
 
@@ -290,7 +288,7 @@ def main():
 
 	ur5.pick_place(ur5_pose_box, pose_green_bin, box_info)
 
-	power_req = 30
+	power_req = 20
 	r = cb_req(power_req)
 	cb_req.wait_for_service()
 

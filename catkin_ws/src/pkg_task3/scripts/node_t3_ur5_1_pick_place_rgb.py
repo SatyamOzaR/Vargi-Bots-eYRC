@@ -27,7 +27,7 @@ class Ur5Moveit:
 
     def __init__(self):
 
-        rospy.init_node('node_t3_ur5_1_pick_place_rgb.py',
+        rospy.init_node('node_t3_ur5_1_pick_place_rgb',
                         anonymous=True)
 
         self._planning_group = 'ur5_1_planning_group'
@@ -264,7 +264,7 @@ def main():
 
     # requesting the conveyor-power server to activate for defined power
 
-    power_req = 40
+    power_req = 30
     r = cb_req(power_req)
     cb_req.wait_for_service()
 
@@ -299,6 +299,12 @@ def main():
 
     ur5.set_joint_angles(lst_joint_red_bin)
 
+    # activating conveyor-belt
+
+    power_req = 17
+    r = cb_req(power_req)
+    cb_req.wait_for_service()
+
     # deactivating vacuum-gripper
 
     req = False
@@ -309,11 +315,7 @@ def main():
 
     ur5.remove_box(name1)
 
-    # activating conveyor-belt
-
-    power_req = 30
-    r = cb_req(power_req)
-    cb_req.wait_for_service()
+    
 
     # make ur5 arm to head towards the green box pose
 
@@ -346,6 +348,13 @@ def main():
 
     ur5.set_joint_angles(lst_joint_green_bin)
 
+    # activating conveyor-belt
+
+    power_req = 17
+    r = cb_req(power_req)
+    cb_req.wait_for_service()
+
+
     # deactivating vacuum-gripper
 
     req = False
@@ -356,12 +365,7 @@ def main():
 
     ur5.remove_box(name1)
 
-    # activating conveyor-belt
-
-    power_req = 25
-    r = cb_req(power_req)
-    cb_req.wait_for_service()
-
+    
     # make ur5 arm to head towards the blue box pose
 
     ur5.set_joint_angles(lst_joint_blue_box)
