@@ -215,7 +215,7 @@ class Ur5Moveit:
 		
 		self._scene.attach_box(self._eef_link, self._box_name)
 
-		power_req = 12
+		power_req = 13
 		r = cb_req(power_req)
 
 		pose_values = self._group.get_current_pose().pose
@@ -255,6 +255,9 @@ class Ur5Moveit:
 
 	def callback_topic_subscription(self, x_msg):
 
+		cb_req = rospy.ServiceProxy('/eyrc/vb/conveyor/set_power',
+								conveyorBeltPowerMsg)
+
 		global flag1
 		global flag2
 		global flag3
@@ -276,6 +279,8 @@ class Ur5Moveit:
 
 			if name_model == 'packagen1' and pos.position.y >= -0.01 \
 				and pos.position.y < 0.01 and flag1 == 0:
+				power = 0
+				r = cb_req(power)
 				ur5_pose_box.position.x = pos.position.z-0.8
 				ur5_pose_box.position.y = pos.position.y
 				ur5_pose_box.position.z = pos.position.x+delta
@@ -284,6 +289,8 @@ class Ur5Moveit:
 				red_flag = 1
 			elif name_model == 'packagen2' and pos.position.y >= -0.01 \
 				and pos.position.y < 0.01 and flag2 == 0:
+				power = 0
+				r = cb_req(power)
 				ur5_pose_box.position.x = pos.position.z-0.8
 				ur5_pose_box.position.y = pos.position.y
 				ur5_pose_box.position.z = pos.position.x+delta
@@ -292,6 +299,8 @@ class Ur5Moveit:
 				green_flag = 1
 			elif name_model == 'packagen3' and pos.position.y >= -0.01 \
 				and pos.position.y < 0.01 and flag3 == 0:
+				power = 0
+				r = cb_req(power)
 				ur5_pose_box.position.x = pos.position.z-0.8
 				ur5_pose_box.position.y = pos.position.y
 				ur5_pose_box.position.z = pos.position.x+delta
@@ -324,7 +333,7 @@ def main():
 	while red_flag == 0:
 		{}
 
-	ur5.conveyor_power(0)
+	#ur5.conveyor_power(0)
 
 	ur5.pick_place(ur5_pose_box, pose_red_bin, box_info)
 
@@ -336,7 +345,7 @@ def main():
 		{}
 
 	#t1.join()
-	ur5.conveyor_power(0)
+	#ur5.conveyor_power(0)
 
 	ur5.pick_place(ur5_pose_box, pose_green_bin, box_info)
 
@@ -348,7 +357,7 @@ def main():
 		{}
 
 	#t1.join()
-	ur5.conveyor_power(0)
+	#ur5.conveyor_power(0)
 
 	ur5.pick_place(ur5_pose_box, pose_blue_bin, box_info)
 
