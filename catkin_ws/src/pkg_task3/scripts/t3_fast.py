@@ -20,6 +20,81 @@ flag1 = 0           # flag to control unnecessary looping of "callback_topic_sub
 flag2 = 0           # flag to control unnecessary looping of "callback_topic_subscription()" into "if" loop2
 flag3 = 0           # flag to control unnecessary looping of "callback_topic_subscription()" into "if" loop3
 
+# defining joint-poses of boxes and bins
+
+lst_joint_red_box = [
+    0.136738174176239,
+    -2.4433723314322577,
+    -1.015493231203589,
+    -1.2527420976789383,
+    1.5701598096829272,
+    0.13745811570573352,
+    ]
+
+lst_joint_red_bin = [
+    -1.572095163914824,
+    -2.126789666427629,
+    -1.5804880008405808,
+    -1.0047835414082948,
+    1.570448212469267,
+    -1.5722516385510321,
+    ]
+
+lst_joint_green_box = [
+    0.16592096336899775,
+    -2.129488982949546,
+    -1.5759294868634353,
+    -1.006705467061689,
+    1.5700307146689507,
+    0.1657972464914419,
+    ]
+
+lst_joint_green_bin = [
+    -0.10593894411957905,
+    -0.8202531299890437,
+    1.2400931742133245,
+    -1.9898387564450184,
+    -1.5700210689062253,
+    3.035497458578803,
+    ]
+lst_joint_blue_box = [
+    0.12158735222169703,
+    -2.8613667015769444,
+    -0.1953767748745321,
+    -1.6556216744224201,
+    1.5700218863245965,
+    0.12258242897469174,
+    ]
+lst_joint_blue_bin = [
+    1.8005952135366776,
+    -2.5540825847368067,
+    -0.805238265236035,
+    1.7883759664740175,
+    -1.5702815624673567,
+    -1.3409121510993067,
+    ]
+
+# defining the spawn-poses for boxes in rviz
+
+red_box_spawn_rviz = geometry_msgs.msg.PoseStamped()
+red_box_spawn_rviz.pose.position.x = -0.800328
+red_box_spawn_rviz.pose.position.y = 0.0
+red_box_spawn_rviz.pose.position.z = 0.998
+red_box_spawn_rviz.header.frame_id = 'world'
+
+green_box_spawn_rviz = geometry_msgs.msg.PoseStamped()
+green_box_spawn_rviz.pose.position.x = -0.660551
+green_box_spawn_rviz.pose.position.y = 0.0
+green_box_spawn_rviz.pose.position.z = 0.998
+green_box_spawn_rviz.header.frame_id = 'world'
+
+blue_box_spawn_rviz = geometry_msgs.msg.PoseStamped()
+blue_box_spawn_rviz.pose.position.x = -0.900551
+blue_box_spawn_rviz.pose.position.y = 0.0
+blue_box_spawn_rviz.pose.position.z = 0.998
+blue_box_spawn_rviz.header.frame_id = 'world'
+
+
 
 class Ur5Moveit:
 
@@ -69,6 +144,17 @@ class Ur5Moveit:
                       + '\033[0m')
 
     def set_joint_angles(self, arg_list_joint_angles):
+        cb_req = rospy.ServiceProxy('/eyrc/vb/conveyor/set_power',
+                                conveyorBeltPowerMsg)
+
+        if(arg_list_joint_angles == lst_joint_red_bin or 
+            arg_list_joint_angles == lst_joint_green_bin or
+            arg_list_joint_angles == lst_joint_blue_bin):
+        # activating conveyor-belt
+            power_req = 17
+            r = cb_req(power_req)
+            cb_req.wait_for_service()
+
 
         list_joint_values = self._group.get_current_joint_values()
         rospy.loginfo('\033[94m' + '>>> Current Joint Values:'
@@ -144,13 +230,13 @@ class Ur5Moveit:
                 and pos.position.y < 0.01 and flag1 == 0:
 
                 print 'ready to pick red box'
-                flag1 == 1
+                flag1 = 1
                 red_flag = 1
             elif name_model == 'packagen2' and pos.position.y >= -0.01 \
                 and pos.position.y < 0.01 and flag2 == 0:
 
                 print 'ready to pick green box'
-                flag2 == 1
+                flag2 = 1
                 green_flag = 1
             elif name_model == 'packagen3' and pos.position.y >= -0.01 \
                 and pos.position.y < 0.01 and flag3 == 0:
@@ -188,79 +274,6 @@ def main():
     rospy.Subscriber('/eyrc/vb/logical_camera_2', LogicalCameraImage,
                      ur5.callback_topic_subscription)
 
-    # defining joint-poses of boxes and bins
-
-    lst_joint_red_box = [
-        0.136738174176239,
-        -2.4433723314322577,
-        -1.015493231203589,
-        -1.2527420976789383,
-        1.5701598096829272,
-        0.13745811570573352,
-        ]
-
-    lst_joint_red_bin = [
-        -1.572095163914824,
-        -2.126789666427629,
-        -1.5804880008405808,
-        -1.0047835414082948,
-        1.570448212469267,
-        -1.5722516385510321,
-        ]
-
-    lst_joint_green_box = [
-        0.16592096336899775,
-        -2.129488982949546,
-        -1.5759294868634353,
-        -1.006705467061689,
-        1.5700307146689507,
-        0.1657972464914419,
-        ]
-
-    lst_joint_green_bin = [
-        -0.10593894411957905,
-        -0.8202531299890437,
-        1.2400931742133245,
-        -1.9898387564450184,
-        -1.5700210689062253,
-        3.035497458578803,
-        ]
-    lst_joint_blue_box = [
-        0.12158735222169703,
-        -2.8613667015769444,
-        -0.1953767748745321,
-        -1.6556216744224201,
-        1.5700218863245965,
-        0.12258242897469174,
-        ]
-    lst_joint_blue_bin = [
-        1.8005952135366776,
-        -2.5540825847368067,
-        -0.805238265236035,
-        1.7883759664740175,
-        -1.5702815624673567,
-        -1.3409121510993067,
-        ]
-
-    # defining the spawn-poses for boxes in rviz
-
-    red_box_spawn_rviz = geometry_msgs.msg.PoseStamped()
-    red_box_spawn_rviz.pose.position.x = -0.800328
-    red_box_spawn_rviz.pose.position.y = 0.0
-    red_box_spawn_rviz.pose.position.z = 0.998
-    red_box_spawn_rviz.header.frame_id = 'world'
-
-    green_box_spawn_rviz = geometry_msgs.msg.PoseStamped()
-    green_box_spawn_rviz.pose.position.x = -0.660551
-    green_box_spawn_rviz.pose.position.y = 0.0
-    green_box_spawn_rviz.pose.position.z = 0.998
-    green_box_spawn_rviz.header.frame_id = 'world'
-
-    blue_box_spawn_rviz = geometry_msgs.msg.PoseStamped()
-    blue_box_spawn_rviz.pose.position.x = -0.900551
-    blue_box_spawn_rviz.pose.position.y = 0.0
-    blue_box_spawn_rviz.pose.position.z = 0.998
-    blue_box_spawn_rviz.header.frame_id = 'world'
 
     # requesting the conveyor-power server to activate for defined power
 
@@ -298,12 +311,6 @@ def main():
     # make ur5 arm to head towards the red bin pose
 
     ur5.set_joint_angles(lst_joint_red_bin)
-
-    # activating conveyor-belt
-
-    power_req = 17
-    r = cb_req(power_req)
-    cb_req.wait_for_service()
 
     # deactivating vacuum-gripper
 
@@ -347,13 +354,6 @@ def main():
     # make ur5 arm to head towards the green bin pose
 
     ur5.set_joint_angles(lst_joint_green_bin)
-
-    # activating conveyor-belt
-
-    power_req = 17
-    r = cb_req(power_req)
-    cb_req.wait_for_service()
-
 
     # deactivating vacuum-gripper
 
