@@ -1,25 +1,83 @@
 #!/usr/bin/python
 
-import rospy  						# importing ROS-python main library
-import sys  						# importing system-specific parameters and functions
-import copy 						# importing copy module
-import moveit_commander 			# importing moveit_commander module
-import moveit_msgs.msg  			# importing messages from moveit
-import geometry_msgs.msg  			# importing messages of type geometry
-import actionlib  					# importing actionlib module
-import math  						# importing python-math module
+import rospy                        # importing ROS-python main library
+import sys                          # importing system-specific parameters and functions
+import copy                         # importing copy module
+import moveit_commander             # importing moveit_commander module
+import moveit_msgs.msg              # importing messages from moveit
+import geometry_msgs.msg            # importing messages of type geometry
+import actionlib                    # importing actionlib module
+import math                         # importing python-math module
+import threading
 
-from pkg_vb_sim.srv import vacuumGripper  			# importing the service for vacuum-gripper
-from pkg_vb_sim.srv import conveyorBeltPowerMsg  	# importing the service for conveyor-belt
-from pkg_vb_sim.msg import LogicalCameraImage  		# importing messages of type LogicalCameraImage
+from pkg_vb_sim.srv import vacuumGripper            # importing the service for vacuum-gripper
+from pkg_vb_sim.srv import conveyorBeltPowerMsg     # importing the service for conveyor-belt
+from pkg_vb_sim.msg import LogicalCameraImage       # importing messages of type LogicalCameraImage
 
-red_flag = 0  		# red_flag = 1; when '/eyrc/vb/logical_camera_2' identifies red-box at y=0
-green_flag = 0  	# green_flag = 1; when '/eyrc/vb/logical_camera_2' identifies green-box at y=0
-blue_flag = 0  		# blue_flag = 1; when '/eyrc/vb/logical_camera_2' identifies blue-box at y=0
-flag1 = 0  			# flag to control unnecessary looping of "callback_topic_subscription()" into "if" loop1
-flag2 = 0  			# flag to control unnecessary looping of "callback_topic_subscription()" into "if" loop2
-flag3 = 0  			# flag to control unnecessary looping of "callback_topic_subscription()" into "if" loop3
+red_flag = 0        # red_flag = 1; when '/eyrc/vb/logical_camera_2' identifies red-box at y=0
+green_flag = 0      # green_flag = 1; when '/eyrc/vb/logical_camera_2' identifies green-box at y=0
+blue_flag =0        # blue_flag = 1; when '/eyrc/vb/logical_camera_2' identifies blue-box at y=0
+flag1 = 0           # flag to control unnecessary looping of "callback_topic_subscription()" into "if" loop1
+flag2 = 0           # flag to control unnecessary looping of "callback_topic_subscription()" into "if" loop2
+flag3 = 0           # flag to control unnecessary looping of "callback_topic_subscription()" into "if" loop3
 
+#defining home-pose
+home_pose = geometry_msgs.msg.Pose()
+home_pose.position.x = -0.8
+home_pose.position.y = 0.0
+home_pose.position.z = 1.22
+home_pose.orientation.x = -0.5
+home_pose.orientation.y = -0.5
+home_pose.orientation.z = 0.5
+home_pose.orientation.w = 0.5
+
+#defining variable ur5_pose_box which get updated in callback_topic_subscription of '/eyrc/vb/logical_camera_2'
+ur5_pose_box = geometry_msgs.msg.Pose()
+ur5_pose_box.position.x = 0.0
+ur5_pose_box.position.y = 0.0
+ur5_pose_box.position.z = 0.0
+ur5_pose_box.orientation.x = -0.5
+ur5_pose_box.orientation.y = -0.5
+ur5_pose_box.orientation.z = 0.5
+ur5_pose_box.orientation.w = 0.5
+
+#defining box dynamics
+box_length = 0.15
+vacuum_gripper_width = 0.115
+delta = vacuum_gripper_width + box_length / 2
+
+#defining the pose of red bin
+pose_red_bin = geometry_msgs.msg.Pose()
+pose_red_bin.position.x = 0.11
+pose_red_bin.position.y = 0.65
+pose_red_bin.position.z = 1.3 + delta
+pose_red_bin.orientation.x = -0.5
+pose_red_bin.orientation.y = -0.5
+pose_red_bin.orientation.z = 0.5
+pose_red_bin.orientation.w = 0.5
+
+#defining the pose pf green bin
+pose_green_bin = geometry_msgs.msg.Pose()
+pose_green_bin.position.x = 0.75
+pose_green_bin.position.y = 0.03
+pose_green_bin.position.z = 1.2+ delta
+pose_green_bin.orientation.x = -0.5
+pose_green_bin.orientation.y = -0.5
+pose_green_bin.orientation.z = 0.5
+pose_green_bin.orientation.w = 0.5
+
+#defining the pose of blue bin
+pose_blue_bin = geometry_msgs.msg.Pose()
+pose_blue_bin.position.x = 0.04
+pose_blue_bin.position.y = -0.65
+pose_blue_bin.position.z = 1 + delta
+pose_blue_bin.orientation.x = -0.5
+pose_blue_bin.orientation.y = -0.5
+pose_blue_bin.orientation.z = 0.5
+pose_blue_bin.orientation.w = 0.5
+
+#defining empty name variable
+box_info = ''
 
 class Ur5Moveit:
 
@@ -51,7 +109,7 @@ class Ur5Moveit:
         self._group_names = self._robot.get_group_names()
         self._box_name = ''
 
-        # Current State of the Robot is needed to add box to planning scene
+        # Current State of the Robot is needed to add box to planning _scene
 
         self._curr_state = self._robot.get_current_state()
 
@@ -68,70 +126,163 @@ class Ur5Moveit:
         rospy.loginfo('\033[94m' + ' >>> Ur5Moveit init done.'
                       + '\033[0m')
 
-    def set_joint_angles(self, arg_list_joint_angles):
-
-        list_joint_values = self._group.get_current_joint_values()
-        rospy.loginfo('\033[94m' + '>>> Current Joint Values:'
-                      + '\033[0m')
-        rospy.loginfo(list_joint_values)
-
-        self._group.set_joint_value_target(arg_list_joint_angles)
-        self._group.plan()
-        flag_plan = self._group.go(wait=True)
-
-        list_joint_values = self._group.get_current_joint_values()
-        rospy.loginfo('\033[94m' + '>>> Final Joint Values:' + '\033[0m'
-                      )
-        rospy.loginfo(list_joint_values)
+    def go_to_pose(self, arg_pose):
 
         pose_values = self._group.get_current_pose().pose
-        rospy.loginfo('\033[94m' + '>>> Final Pose:' + '\033[0m')
+        rospy.loginfo('\033[94m' + ">>> Current Pose:" + '\033[0m')
         rospy.loginfo(pose_values)
 
-        if flag_plan == True:
-            rospy.loginfo('\033[94m' + '>>> set_joint_angles() Success'
-                          + '\033[0m')
+        self._group.set_pose_target(arg_pose)
+        flag_plan = self._group.go(wait=True)  # wait=False for Async Move
+
+        pose_values = self._group.get_current_pose().pose
+        rospy.loginfo('\033[94m' + ">>> Final Pose:" + '\033[0m')
+        rospy.loginfo(pose_values)
+
+        list_joint_values = self._group.get_current_joint_values()
+        rospy.loginfo('\033[94m' + ">>> Final Joint Values:" + '\033[0m')
+        rospy.loginfo(list_joint_values)
+
+        if (flag_plan == True):
+            rospy.loginfo(
+                '\033[94m' + ">>> go_to_pose() Success" + '\033[0m')
         else:
-            rospy.logerr('\033[94m' + '>>> set_joint_angles() Failed.'
-                         + '\033[0m')
+            rospy.logerr(
+                '\033[94m' + ">>> go_to_pose() Failed. Solution for Pose not Found." + '\033[0m')
 
         return flag_plan
 
-    def add_box(self, pose1, name):
+    def conveyor_power(self, power):
 
-        self._pose = pose1
-        self._box_name = name
-        self.scene = moveit_commander.PlanningSceneInterface()
-        self.scene.add_box(self._box_name, self._pose, size=(0.15,
+        # creating client object for conveyor-power server
+        cb_req = rospy.ServiceProxy('/eyrc/vb/conveyor/set_power',
+                                conveyorBeltPowerMsg)
+
+        # requesting the conveyor-power server to activate for defined power
+        r = cb_req(power)
+
+
+    def vacuum_gripper(self, req):
+
+        # creating client object for vacuum-gripper server
+        vg_req = rospy.ServiceProxy('/eyrc/vb/ur5_1/activate_vacuum_gripper'
+                                , vacuumGripper)
+
+        # activating vacuum-gripper by requesting vacuum-gripper server
+        q = vg_req(req)
+
+    def pick_place(self, arg_pose_box, arg_pose_bin, box_name):
+
+        #extracting the pose at which box gets spawned in rviz
+        box_pose_rviz = geometry_msgs.msg.PoseStamped()
+        box_pose_rviz.pose.position.x = arg_pose_box.position.x
+        box_pose_rviz.pose.position.y = arg_pose_box.position.y
+        box_pose_rviz.pose.position.z = 0.998
+        box_pose_rviz.header.frame_id = 'world'
+
+        #creating service objects
+        vg_req = rospy.ServiceProxy('/eyrc/vb/ur5_1/activate_vacuum_gripper'
+                                , vacuumGripper)
+
+        cb_req = rospy.ServiceProxy('/eyrc/vb/conveyor/set_power',
+                                conveyorBeltPowerMsg)
+
+        #assigning values
+        self._box_pose = box_pose_rviz
+        self._box_name = box_name
+        
+        # going to box pose
+        pose_values = self._group.get_current_pose().pose
+        rospy.loginfo('\033[94m' + '>>> Current Pose:' + '\033[0m')
+        rospy.loginfo(pose_values)
+
+        self._group.set_pose_target(arg_pose_box)
+        flag_plan_box = self._group.go(wait=True)  # wait=False for Async Move
+
+        pose_values = self._group.get_current_pose().pose
+        rospy.loginfo('\033[94m' + '>>> Final box Pose:' + '\033[0m')
+        rospy.loginfo(pose_values)
+
+        list_joint_values = self._group.get_current_joint_values()
+        rospy.loginfo('\033[94m' + '>>> Final Joint Values at box pose:' + '\033[0m'
+                      )
+        rospy.loginfo(list_joint_values)
+
+        if flag_plan_box == True:
+            rospy.loginfo('\033[94m' + '>>> go to box pose Success'
+                          + '\033[0m')
+        else:
+            rospy.logerr('\033[94m'
+                         + '>>> go_to_pose() Failed. Solution for box Pose not Found.'
+                          + '\033[0m')
+
+        #activating vacuum gripper
+        req = True
+        q = vg_req(req)
+
+        #adding box in rviz
+        self._scene.add_box(self._box_name, self._box_pose, size=(0.15,
                            0.15, 0.15))
 
-        self.group_name = 'ur5_1_planning_group'
-        self.group = \
-            moveit_commander.MoveGroupCommander(self.group_name)
+        self._scene.attach_box(self._eef_link, self._box_name)
 
-        self.eef_link = self.group.get_end_effector_link()
-        self.scene.attach_box(self.eef_link, self._box_name)
+        #activating conveyor belt
+        power_req = 13
+        r = cb_req(power_req)
 
-    def remove_box(self, object_name):
+        #going to bin pose
+        pose_values = self._group.get_current_pose().pose
+        rospy.loginfo('\033[94m' + '>>> Current Pose:' + '\033[0m')
+        rospy.loginfo(pose_values)
 
-        self.box_name = object_name
+        self._group.set_pose_target(arg_pose_bin)
+        flag_plan_bin = self._group.go(wait=True)  # wait=False for Async Move
 
-        self.scene = moveit_commander.PlanningSceneInterface()
-        self.eef_link = self.group.get_end_effector_link()
 
-        self.scene.remove_attached_object(self.eef_link,
-                name=self.box_name)
+        pose_values = self._group.get_current_pose().pose
+        rospy.loginfo('\033[94m' + '>>> Final bin Pose:' + '\033[0m')
+        rospy.loginfo(pose_values)
 
-        self.scene.remove_world_object(self.box_name)
+        list_joint_values = self._group.get_current_joint_values()
+        rospy.loginfo('\033[94m' + '>>> Final Joint Values at bin pose:' + '\033[0m'
+                      )
+        rospy.loginfo(list_joint_values)
+
+        if flag_plan_bin == True:
+            rospy.loginfo('\033[94m' + '>>> go to bin pose Success'
+                          + '\033[0m')
+        else:
+            rospy.logerr('\033[94m'
+                         + '>>> go_to_pose() Failed. Solution for bin Pose not Found.'
+                          + '\033[0m')
+
+        #deactivating vacuum gripper
+        req = False
+        q = vg_req(req)
+
+        #remove box from End-Effector
+        self._scene.remove_attached_object(self._eef_link,
+                name=self._box_name)
+        #removing box from rviz
+        self._scene.remove_world_object(self._box_name)
+
+
+        return (flag_plan_box and flag_plan_bin)
 
     def callback_topic_subscription(self, x_msg):
 
-        global red_flag
-        global green_flag
-        global blue_flag
+        cb_req = rospy.ServiceProxy('/eyrc/vb/conveyor/set_power',
+                                conveyorBeltPowerMsg)
+
         global flag1
         global flag2
         global flag3
+        global ur5_pose_box
+        global delta
+        global box_info
+        global red_flag
+        global green_flag
+        global blue_flag
 
         number_models = len(x_msg.models)
 
@@ -142,25 +293,36 @@ class Ur5Moveit:
 
             if name_model == 'packagen1' and pos.position.y >= -0.01 \
                 and pos.position.y < 0.01 and flag1 == 0:
-
-                print 'ready to pick red box'
-                flag1 == 1
+                power = 0
+                r = cb_req(power)
+                ur5_pose_box.position.x = pos.position.z-0.8
+                ur5_pose_box.position.y = pos.position.y
+                ur5_pose_box.position.z = pos.position.x+delta
+                box_info = name_model
+                flag1 = 1
                 red_flag = 1
             elif name_model == 'packagen2' and pos.position.y >= -0.01 \
                 and pos.position.y < 0.01 and flag2 == 0:
-
-                print 'ready to pick green box'
-                flag2 == 1
+                power = 0
+                r = cb_req(power)
+                ur5_pose_box.position.x = pos.position.z-0.8
+                ur5_pose_box.position.y = pos.position.y
+                ur5_pose_box.position.z = pos.position.x+delta
+                box_info = name_model
+                flag2 = 1
                 green_flag = 1
             elif name_model == 'packagen3' and pos.position.y >= -0.01 \
                 and pos.position.y < 0.01 and flag3 == 0:
-
-                print 'ready to pick blue box'
+                power = 0
+                r = cb_req(power)
+                ur5_pose_box.position.x = pos.position.z-0.8
+                ur5_pose_box.position.y = pos.position.y
+                ur5_pose_box.position.z = pos.position.x+delta
+                box_info = name_model
                 flag3 = 1
                 blue_flag = 1
 
     # Destructor
-
     def __del__(self):
         moveit_commander.roscpp_shutdown()
         rospy.loginfo('\033[94m' + 'Object of class Ur5Moveit Deleted.'
@@ -169,252 +331,38 @@ class Ur5Moveit:
 
 def main():
 
-    # creating the object of class Ur5Moveit()
-
     ur5 = Ur5Moveit()
-
-    # creating client object for conveyor-power server
-
-    cb_req = rospy.ServiceProxy('/eyrc/vb/conveyor/set_power',
-                                conveyorBeltPowerMsg)
-
-    # creating client object for vacuum-gripper server
-
-    vg_req = rospy.ServiceProxy('/eyrc/vb/ur5_1/activate_vacuum_gripper'
-                                , vacuumGripper)
-
-    # subscribing to the topic '/eyrc/vb/logical_camera_2' and to get feedback in terms of package-name and positions
 
     rospy.Subscriber('/eyrc/vb/logical_camera_2', LogicalCameraImage,
                      ur5.callback_topic_subscription)
 
-    # defining joint-poses of boxes and bins
+    ur5.conveyor_power(27)
 
-    lst_joint_red_box = [
-        0.136738174176239,
-        -2.4433723314322577,
-        -1.015493231203589,
-        -1.2527420976789383,
-        1.5701598096829272,
-        0.13745811570573352,
-        ]
-
-    lst_joint_red_bin = [
-        -1.572095163914824,
-        -2.126789666427629,
-        -1.5804880008405808,
-        -1.0047835414082948,
-        1.570448212469267,
-        -1.5722516385510321,
-        ]
-
-    lst_joint_green_box = [
-        0.16592096336899775,
-        -2.129488982949546,
-        -1.5759294868634353,
-        -1.006705467061689,
-        1.5700307146689507,
-        0.1657972464914419,
-        ]
-
-    lst_joint_green_bin = [
-        -0.10593894411957905,
-        -0.8202531299890437,
-        1.2400931742133245,
-        -1.9898387564450184,
-        -1.5700210689062253,
-        3.035497458578803,
-        ]
-    lst_joint_blue_box = [
-        0.12158735222169703,
-        -2.8613667015769444,
-        -0.1953767748745321,
-        -1.6556216744224201,
-        1.5700218863245965,
-        0.12258242897469174,
-        ]
-    lst_joint_blue_bin = [
-        1.8005952135366776,
-        -2.5540825847368067,
-        -0.805238265236035,
-        1.7883759664740175,
-        -1.5702815624673567,
-        -1.3409121510993067,
-        ]
-
-    # defining the spawn-poses for boxes in rviz
-
-    red_box_spawn_rviz = geometry_msgs.msg.PoseStamped()
-    red_box_spawn_rviz.pose.position.x = -0.800328
-    red_box_spawn_rviz.pose.position.y = 0.0
-    red_box_spawn_rviz.pose.position.z = 0.998
-    red_box_spawn_rviz.header.frame_id = 'world'
-
-    green_box_spawn_rviz = geometry_msgs.msg.PoseStamped()
-    green_box_spawn_rviz.pose.position.x = -0.660551
-    green_box_spawn_rviz.pose.position.y = 0.0
-    green_box_spawn_rviz.pose.position.z = 0.998
-    green_box_spawn_rviz.header.frame_id = 'world'
-
-    blue_box_spawn_rviz = geometry_msgs.msg.PoseStamped()
-    blue_box_spawn_rviz.pose.position.x = -0.900551
-    blue_box_spawn_rviz.pose.position.y = 0.0
-    blue_box_spawn_rviz.pose.position.z = 0.998
-    blue_box_spawn_rviz.header.frame_id = 'world'
-
-    # requesting the conveyor-power server to activate for defined power
-
-    power_req = 30
-    r = cb_req(power_req)
-    cb_req.wait_for_service()
-
-    # make ur5 arm to head towards the red pox pose
-
-    ur5.set_joint_angles(lst_joint_red_box)
-
-    # waiting for logical-camera feedback
+    ur5.go_to_pose(home_pose)
 
     while red_flag == 0:
         {}
 
-    # stopping conveyor-belt
+    ur5.pick_place(ur5_pose_box, pose_red_bin, box_info)
 
-    power_req = 0
-    r = cb_req(power_req)
-    cb_req.wait_for_service()
-
-    # activating vacuum-gripper by requesting vacuum-gripper server
-
-    req = True
-    q = vg_req(req)
-    vg_req.wait_for_service()
-
-    # adding box in rviz and attaching it to the end-effector
-
-    name1 = 'packagen1'
-    ur5.add_box(red_box_spawn_rviz, name1)
-    
-
-    # make ur5 arm to head towards the red bin pose
-
-    ur5.set_joint_angles(lst_joint_red_bin)
-
-    # activating conveyor-belt
-
-    power_req = 17
-    r = cb_req(power_req)
-    cb_req.wait_for_service()
-
-    # deactivating vacuum-gripper
-
-    req = False
-    q = vg_req(req)
-    vg_req.wait_for_service()
-
-    # removing box from end-effector and from rviz
-
-    ur5.remove_box(name1)
-
-    
-
-    # make ur5 arm to head towards the green box pose
-
-    ur5.set_joint_angles(lst_joint_green_box)
-
-    # waiting for logical-camera feedback
+    ur5.go_to_pose(home_pose)
 
     while green_flag == 0:
         {}
 
-    # stop conveyor-belt
+    ur5.pick_place(ur5_pose_box, pose_green_bin, box_info)
 
-    power_req = 0
-    r = cb_req(power_req)
-    cb_req.wait_for_service()
-
-    # activating vacuum-gripper
-
-    req = True
-    q = vg_req(req)
-    vg_req.wait_for_service()
-
-    # adding box to rviz and attaching it to the end-effector
-
-    name1 = 'packagen2'
-    ur5.add_box(green_box_spawn_rviz, name1)
-    
-
-    # make ur5 arm to head towards the green bin pose
-
-    ur5.set_joint_angles(lst_joint_green_bin)
-
-    # activating conveyor-belt
-
-    power_req = 17
-    r = cb_req(power_req)
-    cb_req.wait_for_service()
+    ur5.go_to_pose(home_pose)
 
 
-    # deactivating vacuum-gripper
-
-    req = False
-    q = vg_req(req)
-    vg_req.wait_for_service()
-
-    # removing box from end-effector and rviz
-
-    ur5.remove_box(name1)
-
-    
-    # make ur5 arm to head towards the blue box pose
-
-    ur5.set_joint_angles(lst_joint_blue_box)
-
-    # wait for logical-camera feedback
-
-    while blue_flag == 0:
+    while blue_flag == 0:   
         {}
 
-    # deactivating conveyor-belt
+    ur5.pick_place(ur5_pose_box, pose_blue_bin, box_info)
 
-    power_req = 0
-    r = cb_req(power_req)
-    cb_req.wait_for_service()
-
-    # activating vacuum-gripper
-
-    req = True
-    q = vg_req(req)
-    vg_req.wait_for_service()
-
-    # adding box to rviz and attaching it to the end-effector
-
-    name1 = 'packagen3'
-    ur5.add_box(blue_box_spawn_rviz, name1)
-    
-
-    # make ur5 arm to head towards the blue pin pose
-
-    ur5.set_joint_angles(lst_joint_blue_bin)
-
-    # deactivating vacuum-gripper
-
-    req = False
-    q = vg_req(req)
-    vg_req.wait_for_service()
-
-    # removing box from end-effector and rviz
-
-    ur5.remove_box(name1)
-
-    # make ur5 arm to go to rest pose
-
-    ur5.set_joint_angles(lst_joint_red_box)
-
-    # deleting the object of class Ur5Moveit()
+    ur5.go_to_pose(home_pose)
 
     del ur5
-
 
 if __name__ == '__main__':
     main()
