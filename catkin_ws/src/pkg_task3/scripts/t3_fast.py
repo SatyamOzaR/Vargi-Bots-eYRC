@@ -293,7 +293,7 @@ def main():
     rospy.Subscriber('/eyrc/vb/logical_camera_2', LogicalCameraImage,
                      ur5.callback_topic_subscription)
 
-    ur5.conveyor_power(20)
+    ur5.conveyor_power(25)
 
     while red_flag == 0:
         {}
@@ -316,7 +316,7 @@ def main():
                                         pose_red_bin.position.z-ur5_pose_box.position.z)
 
     
-    ur5.conveyor_power(20)
+    ur5.conveyor_power(15)
 
     ur5.vacuum_gripper(False)
 
