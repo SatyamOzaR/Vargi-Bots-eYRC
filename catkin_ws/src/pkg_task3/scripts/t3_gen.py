@@ -8,6 +8,7 @@ import moveit_msgs.msg  			# importing messages from moveit
 import geometry_msgs.msg  			# importing messages of type geometry
 import actionlib  					# importing actionlib module
 import math  						# importing python-math module
+import threading
 
 from pkg_vb_sim.srv import vacuumGripper  			# importing the service for vacuum-gripper
 from pkg_vb_sim.srv import conveyorBeltPowerMsg  	# importing the service for conveyor-belt
@@ -52,7 +53,7 @@ pose_red_bin.orientation.w = 0.5
 pose_green_bin = geometry_msgs.msg.Pose()
 pose_green_bin.position.x = 0.75
 pose_green_bin.position.y = 0.03
-pose_green_bin.position.z = 1.3 + delta
+pose_green_bin.position.z = 1.2+ delta
 pose_green_bin.orientation.x = -0.5
 pose_green_bin.orientation.y = -0.5
 pose_green_bin.orientation.z = 0.5
@@ -61,7 +62,7 @@ pose_green_bin.orientation.w = 0.5
 pose_blue_bin = geometry_msgs.msg.Pose()
 pose_blue_bin.position.x = 0.04
 pose_blue_bin.position.y = -0.65
-pose_blue_bin.position.z = 1.3+ delta
+pose_blue_bin.position.z = 1 + delta
 pose_blue_bin.orientation.x = -0.5
 pose_blue_bin.orientation.y = -0.5
 pose_blue_bin.orientation.z = 0.5
@@ -123,7 +124,7 @@ class Ur5Moveit:
 		rospy.loginfo(pose_values)
 
 		self._group.set_pose_target(arg_pose)
-		flag_plan = self._group.go(wait=False)  # wait=False for Async Move
+		flag_plan = self._group.go(wait=True)  # wait=False for Async Move
 
 		pose_values = self._group.get_current_pose().pose
 		rospy.loginfo('\033[94m' + ">>> Final Pose:" + '\033[0m')
@@ -133,7 +134,14 @@ class Ur5Moveit:
 		rospy.loginfo('\033[94m' + ">>> Final Joint Values:" + '\033[0m')
 		rospy.loginfo(list_joint_values)
 
-		
+		if (flag_plan == True):
+			rospy.loginfo(
+				'\033[94m' + ">>> go_to_pose() Success" + '\033[0m')
+		else:
+			rospy.logerr(
+				'\033[94m' + ">>> go_to_pose() Failed. Solution for Pose not Found." + '\033[0m')
+
+		return flag_plan
 
 	def conveyor_power(self, power):
 
@@ -207,7 +215,7 @@ class Ur5Moveit:
 		
 		self._scene.attach_box(self._eef_link, self._box_name)
 
-		power_req = 15
+		power_req = 12
 		r = cb_req(power_req)
 
 		pose_values = self._group.get_current_pose().pose
@@ -308,7 +316,7 @@ def main():
 					 ur5.callback_topic_subscription)
 
 
-	ur5.conveyor_power(23)
+	ur5.conveyor_power(25)
 
 	ur5.go_to_pose(home_pose)
 
@@ -321,19 +329,25 @@ def main():
 	ur5.pick_place(ur5_pose_box, pose_red_bin, box_info)
 
 	ur5.go_to_pose(home_pose)
+	#t1 = threading.Thread(target=ur5.go_to_pose, args=(home_pose))
+	#t1.start()
 
 	while green_flag == 0:
 		{}
 
+	#t1.join()
 	ur5.conveyor_power(0)
 
 	ur5.pick_place(ur5_pose_box, pose_green_bin, box_info)
 
 	ur5.go_to_pose(home_pose)
+	#t1 = threading.Thread(target=ur5.go_to_pose, args=(home_pose))
+	#t1.start()
 
 	while blue_flag == 0:	
 		{}
 
+	#t1.join()
 	ur5.conveyor_power(0)
 
 	ur5.pick_place(ur5_pose_box, pose_blue_bin, box_info)
