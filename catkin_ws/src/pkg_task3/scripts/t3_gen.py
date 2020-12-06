@@ -123,7 +123,7 @@ class Ur5Moveit:
 		rospy.loginfo(pose_values)
 
 		self._group.set_pose_target(arg_pose)
-		flag_plan = self._group.go(wait=True)  # wait=False for Async Move
+		flag_plan = self._group.go(wait=False)  # wait=False for Async Move
 
 		pose_values = self._group.get_current_pose().pose
 		rospy.loginfo('\033[94m' + ">>> Final Pose:" + '\033[0m')
@@ -133,14 +133,7 @@ class Ur5Moveit:
 		rospy.loginfo('\033[94m' + ">>> Final Joint Values:" + '\033[0m')
 		rospy.loginfo(list_joint_values)
 
-		if (flag_plan == True):
-			rospy.loginfo(
-				'\033[94m' + ">>> go_to_pose() Success" + '\033[0m')
-		else:
-			rospy.logerr(
-				'\033[94m' + ">>> go_to_pose() Failed. Solution for Pose not Found." + '\033[0m')
-
-		return flag_plan
+		
 
 	def conveyor_power(self, power):
 
@@ -327,19 +320,25 @@ def main():
 
 	ur5.pick_place(ur5_pose_box, pose_red_bin, box_info)
 
+	ur5.go_to_pose(home_pose)
+
 	while green_flag == 0:
 		{}
 
 	ur5.conveyor_power(0)
 
-	ur5.pick_place(ur5_pose_box, pose_red_bin, box_info)
+	ur5.pick_place(ur5_pose_box, pose_green_bin, box_info)
+
+	ur5.go_to_pose(home_pose)
 
 	while blue_flag == 0:	
 		{}
 
 	ur5.conveyor_power(0)
 
-	ur5.pick_place(ur5_pose_box, pose_red_bin, box_info)
+	ur5.pick_place(ur5_pose_box, pose_blue_bin, box_info)
+
+	ur5.go_to_pose(home_pose)
 
 	del ur5
 
