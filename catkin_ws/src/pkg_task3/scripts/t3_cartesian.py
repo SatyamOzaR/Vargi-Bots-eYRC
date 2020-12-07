@@ -137,31 +137,42 @@ class Ur5Moveit:
         self._group.set_pose_target(arg_pose)
         flag_plan = self._group.go(wait=True)
 
-        if flag_plan == True:
-            rospy.loginfo('\033[94m' + '>>> go to Home Pose Success '
-                          + '\033[0m')
-        else:
-            rospy.logerr('\033[94m'
-                         + '>>> Solution for Home Pose not Found.'
-                         + '\033[0m')
-
         return flag_plan
 
-    def pick_place(
-        self,
-        arg_pose_box,
-        arg_pose_bin,
-        box_name,
-        ):
+    def ee_cartesian_translation(self, trans_x, trans_y, trans_z):
+        # Create a empty list to hold waypoints
+        waypoints = []
 
-        # creating service objects
+        # Add Current Pose to the list of waypoints
+        waypoints.append(self._group.get_current_pose().pose)
 
-        vg_req = \
-            rospy.ServiceProxy('/eyrc/vb/ur5_1/activate_vacuum_gripper'
-                               , vacuumGripper)
+        # Create a New waypoint
+        wpose = geometry_msgs.msg.Pose()
+        wpose.position.x = waypoints[0].position.x + (trans_x)  
+        wpose.position.y = waypoints[0].position.y + (trans_y)  
+        wpose.position.z = waypoints[0].position.z + (trans_z)
+        # This to keep EE parallel to Ground Plane
+        wpose.orientation.x = -0.5
+        wpose.orientation.y = -0.5
+        wpose.orientation.z = 0.5
+        wpose.orientation.w = 0.5
 
-        cb_req = rospy.ServiceProxy('/eyrc/vb/conveyor/set_power',
-                                    conveyorBeltPowerMsg)
+        waypoints.append(copy.deepcopy(wpose))
+
+        (plan, fraction) = self._group.compute_cartesian_path(
+            waypoints,
+            0.01,  
+            0.0)
+        rospy.loginfo("Path computed successfully. Moving the arm.")
+
+        num_pts = len(plan.joint_trajectory.points)
+        if (num_pts >= 3):
+            del plan.joint_trajectory.points[0]
+            del plan.joint_trajectory.points[1]
+
+        self._group.execute(plan)
+
+    def add_box(self, arg_pose_box, box_name):
 
         # extracting the pose at which box gets spawned in rviz
 
@@ -171,22 +182,6 @@ class Ur5Moveit:
         box_pose_rviz.pose.position.z = arg_pose_box.position.z - 0.192  # offset for no collision
         box_pose_rviz.header.frame_id = 'world'
 
-        # going to box pose
-
-        self._group.set_pose_target(arg_pose_box)
-        flag_plan_box = self._group.go(wait=True)
-
-        if flag_plan_box == True:
-            rospy.loginfo('\033[94m' + '>>> go to box' + box_name
-                          + 'Pose Success' + '\033[0m')
-        else:
-            rospy.logerr('\033[94m' + '>>>  Solution for box'
-                         + box_name + 'Pose not Found.' + '\033[0m')
-
-        # activating vacuum gripper
-
-        vg_req(True)
-
         # adding box in rviz
 
         self._scene.add_box(box_name, box_pose_rviz, size=(0.15, 0.15,
@@ -194,27 +189,7 @@ class Ur5Moveit:
 
         self._scene.attach_box(self._eef_link, box_name)
 
-        # activating conveyor belt
-
-        cb_req(20)
-
-        # going to bin pose
-
-        self._group.set_pose_target(arg_pose_bin)
-        flag_plan_bin = self._group.go(wait=True)
-
-        if flag_plan_bin == True:
-            rospy.loginfo('\033[94m' + '>>> go to bin Pose Success'
-                          + '\033[0m')
-        else:
-            rospy.logerr('\033[94m'
-                         + '>>> go_to_pose() Failed. Solution for bin Pose not Found.'
-                          + '\033[0m')
-
-        # deactivating vacuum gripper
-
-        vg_req(False)
-
+    def remove_box(self, box_name):
         # remove box from End-Effector
 
         self._scene.remove_attached_object(self._eef_link,
@@ -223,8 +198,6 @@ class Ur5Moveit:
         # removing box from rviz
 
         self._scene.remove_world_object(box_name)
-
-        return flag_plan_box and flag_plan_bin
 
     def callback_topic_subscription(self, x_msg):
 
@@ -273,7 +246,7 @@ class Ur5Moveit:
                 box_info = name_model
                 flag1 = 1
                 red_flag = 1
-                
+
             elif name_model == 'packagen2' and pos.position.y >= -0.03 \
                 and pos.position.y < 0.03 and flag2 == 0:
 
@@ -329,6 +302,10 @@ def main():
     rospy.Subscriber('/eyrc/vb/logical_camera_2', LogicalCameraImage,
                      ur5.callback_topic_subscription)
 
+    # creating service objects
+    vg_req = rospy.ServiceProxy('/eyrc/vb/ur5_1/activate_vacuum_gripper'
+                               , vacuumGripper)
+
     # creating service object for conveyor belt
 
     cb_req = rospy.ServiceProxy('/eyrc/vb/conveyor/set_power',
@@ -336,7 +313,7 @@ def main():
 
     # starting the conveyor belt
 
-    cb_req(30)
+    cb_req(35)
 
     # got to home pose
 
@@ -347,22 +324,98 @@ def main():
     while red_flag == 0:
         {}
 
-    # pick red box and place in red bin
+    pose_red_box = geometry_msgs.msg.Pose()
+    pose_red_box.position.x = ur5_pose_box.position.x
+    pose_red_box.position.y = ur5_pose_box.position.y
+    pose_red_box.position.z = ur5_pose_box.position.z
+    pose_red_box.orientation.x = ur5_pose_box.orientation.x
+    pose_red_box.orientation.y = ur5_pose_box.orientation.y
+    pose_red_box.orientation.z = ur5_pose_box.orientation.z
+    pose_red_box.orientation.w = ur5_pose_box.orientation.w
 
-    ur5.pick_place(ur5_pose_box, pose_red_bin, box_info)
+    name = box_info
+
+    # going to red box pose
+
+    ur5.ee_cartesian_translation(pose_red_box.position.x - home_pose.position.x,
+                                 pose_red_box.position.y - home_pose.position.y,
+                                 pose_red_box.position.z - home_pose.position.z)
+    # add box
+
+    ur5.add_box(pose_red_box, name)
+
+    # activating vacuum gripper
+
+    vg_req(True)
+
+    # activating conveyor belt
+
+    cb_req(25)
+
+    # go to pose red bin
+
+    ur5.ee_cartesian_translation(pose_red_bin.position.x - pose_red_box.position.x,
+                                 pose_red_bin.position.y - pose_red_box.position.y,
+                                 pose_red_bin.position.z - pose_red_box.position.z)
+
+    # deactivating vacuum gripper
+
+    vg_req(False)
+
+    # remove box
+
+    ur5.remove_box(name)
 
     # comeback to home pose
 
-    ur5.go_to_pose(home_pose)
+    ur5.ee_cartesian_translation(home_pose.position.x - pose_red_bin.position.x,
+                                 home_pose.position.y - pose_red_bin.position.y,
+                                 home_pose.position.z - pose_red_bin.position.z)
 
     # wait for feedback from callback topic subscription
 
     while green_flag == 0:
         {}
 
-    # pick green box and place in green bin
+    pose_green_box = geometry_msgs.msg.Pose()
+    pose_green_box.position.x = ur5_pose_box.position.x
+    pose_green_box.position.y = ur5_pose_box.position.y
+    pose_green_box.position.z = ur5_pose_box.position.z
+    pose_green_box.orientation.x = ur5_pose_box.orientation.x
+    pose_green_box.orientation.y = ur5_pose_box.orientation.y
+    pose_green_box.orientation.z = ur5_pose_box.orientation.z
+    pose_green_box.orientation.w = ur5_pose_box.orientation.w
 
-    ur5.pick_place(ur5_pose_box, pose_green_bin, box_info)
+    name = box_info
+
+    # going to green box pose
+
+    ur5.ee_cartesian_translation(pose_green_box.position.x - home_pose.position.x,
+                                 pose_green_box.position.y - home_pose.position.y,
+                                 pose_green_box.position.z - home_pose.position.z)
+    # add box
+
+    ur5.add_box(pose_green_box, name)
+
+    # activating vacuum gripper
+
+    vg_req(True)
+
+    # activating conveyor belt
+
+    cb_req(20)
+
+    # go to pose green bin
+
+    ur5.go_to_pose(pose_green_bin)
+
+    # deactivating vacuum gripper
+
+    vg_req(False)
+
+    # remove box
+
+    ur5.remove_box(name)
 
     # comeback to home pose
 
@@ -373,13 +426,51 @@ def main():
     while blue_flag == 0:
         {}
 
-    # pick blue box and place in blue bin
+    pose_blue_box = geometry_msgs.msg.Pose()
+    pose_blue_box.position.x = ur5_pose_box.position.x
+    pose_blue_box.position.y = ur5_pose_box.position.y
+    pose_blue_box.position.z = ur5_pose_box.position.z
+    pose_blue_box.orientation.x = ur5_pose_box.orientation.x
+    pose_blue_box.orientation.y = ur5_pose_box.orientation.y
+    pose_blue_box.orientation.z = ur5_pose_box.orientation.z
+    pose_blue_box.orientation.w = ur5_pose_box.orientation.w
 
-    ur5.pick_place(ur5_pose_box, pose_blue_bin, box_info)
+    name = box_info
 
+    # going to green box pose
+
+    ur5.ee_cartesian_translation(pose_blue_box.position.x - home_pose.position.x,
+                                 pose_blue_box.position.y - home_pose.position.y,
+                                 pose_blue_box.position.z - home_pose.position.z)
+    # add box
+
+    ur5.add_box(pose_blue_box, name)
+
+    # activating vacuum gripper
+
+    vg_req(True)
+
+    # activating conveyor belt
+
+    cb_req(20)
+
+    ur5.ee_cartesian_translation(pose_blue_bin.position.x - pose_blue_box.position.x,
+                                 pose_blue_bin.position.y - pose_blue_box.position.y,
+                                 pose_blue_bin.position.z - pose_blue_box.position.z)
+
+    # deactivating vacuum gripper
+
+    vg_req(False)
+
+    # remove box
+
+    ur5.remove_box(name)
+    
     # comeback to home pose
 
-    ur5.go_to_pose(home_pose)
+    ur5.ee_cartesian_translation(home_pose.position.x - pose_blue_bin.position.x,
+                                 home_pose.position.y - pose_blue_bin.position.y,
+                                 home_pose.position.z - pose_blue_bin.position.z)
 
     # end executing this script
 
@@ -388,3 +479,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+	
