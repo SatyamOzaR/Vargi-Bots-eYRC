@@ -58,18 +58,18 @@ home_pose.orientation.w = 0.5
 pose_red_bin = geometry_msgs.msg.Pose()
 pose_red_bin.position.x = 0.11
 pose_red_bin.position.y = 0.65
-pose_red_bin.position.z = 1.3 + delta
+pose_red_bin.position.z = 1.4
 pose_red_bin.orientation.x = -0.5
 pose_red_bin.orientation.y = -0.5
 pose_red_bin.orientation.z = 0.5
 pose_red_bin.orientation.w = 0.5
 
-# defining the pose pf green bin
+# defining the pose of green bin
 
 pose_green_bin = geometry_msgs.msg.Pose()
 pose_green_bin.position.x = 0.75
 pose_green_bin.position.y = 0.03
-pose_green_bin.position.z = 1.2 + delta
+pose_green_bin.position.z = 1.3
 pose_green_bin.orientation.x = -0.5
 pose_green_bin.orientation.y = -0.5
 pose_green_bin.orientation.z = 0.5
@@ -80,7 +80,7 @@ pose_green_bin.orientation.w = 0.5
 pose_blue_bin = geometry_msgs.msg.Pose()
 pose_blue_bin.position.x = 0.04
 pose_blue_bin.position.y = -0.65
-pose_blue_bin.position.z = 1 + delta
+pose_blue_bin.position.z = 1.22
 pose_blue_bin.orientation.x = -0.5
 pose_blue_bin.orientation.y = -0.5
 pose_blue_bin.orientation.z = 0.5
@@ -196,7 +196,7 @@ class Ur5Moveit:
 
         # activating conveyor belt
 
-        cb_req(20)
+        cb_req(22)
 
         # going to bin pose
 
@@ -273,7 +273,7 @@ class Ur5Moveit:
                 box_info = name_model
                 flag1 = 1
                 red_flag = 1
-                
+
             elif name_model == 'packagen2' and pos.position.y >= -0.03 \
                 and pos.position.y < 0.03 and flag2 == 0:
 
@@ -334,13 +334,17 @@ def main():
     cb_req = rospy.ServiceProxy('/eyrc/vb/conveyor/set_power',
                                 conveyorBeltPowerMsg)
 
-    # starting the conveyor belt
-
-    cb_req(30)
-
     # got to home pose
 
     ur5.go_to_pose(home_pose)
+
+    # let other threads get CPU time
+
+    rospy.sleep(4)
+
+    # starting the conveyor belt
+
+    cb_req(70)
 
     # wait for feedback from callback topic subscription
 
@@ -353,7 +357,7 @@ def main():
 
     # comeback to home pose
 
-    ur5.go_to_pose(home_pose)
+    #ur5.go_to_pose(home_pose)
 
     # wait for feedback from callback topic subscription
 
@@ -366,7 +370,7 @@ def main():
 
     # comeback to home pose
 
-    ur5.go_to_pose(home_pose)
+    #ur5.go_to_pose(home_pose)
 
     # wait for feedback from callback topic subscription
 

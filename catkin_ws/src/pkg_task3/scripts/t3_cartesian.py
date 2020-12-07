@@ -80,7 +80,7 @@ pose_green_bin.orientation.w = 0.5
 pose_blue_bin = geometry_msgs.msg.Pose()
 pose_blue_bin.position.x = 0.04
 pose_blue_bin.position.y = -0.65
-pose_blue_bin.position.z = 1 + delta
+pose_blue_bin.position.z = 1.05+ delta
 pose_blue_bin.orientation.x = -0.5
 pose_blue_bin.orientation.y = -0.5
 pose_blue_bin.orientation.z = 0.5
@@ -313,7 +313,7 @@ def main():
 
     # starting the conveyor belt
 
-    cb_req(35)
+    cb_req(70)
 
     # got to home pose
 
@@ -350,7 +350,7 @@ def main():
 
     # activating conveyor belt
 
-    cb_req(25)
+    cb_req(23)
 
     # go to pose red bin
 
@@ -403,7 +403,7 @@ def main():
 
     # activating conveyor belt
 
-    cb_req(20)
+    cb_req(23)
 
     # go to pose green bin
 
@@ -452,7 +452,7 @@ def main():
 
     # activating conveyor belt
 
-    cb_req(20)
+    cb_req(23)
 
     ur5.ee_cartesian_translation(pose_blue_bin.position.x - pose_blue_box.position.x,
                                  pose_blue_bin.position.y - pose_blue_box.position.y,
