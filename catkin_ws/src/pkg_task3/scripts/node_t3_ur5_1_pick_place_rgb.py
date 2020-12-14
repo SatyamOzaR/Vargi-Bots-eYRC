@@ -4,10 +4,13 @@ import rospy                                    # importing ROS-python main libr
 import sys                                      # importing system-specific parameters and functions
 import copy                                     # importing copy module
 import moveit_commander                         # importing moveit_commander module
-import moveit_msgs.msg                          # importing messages from moveit
-import geometry_msgs.msg                        # importing messages of type geometry
+
 import actionlib                                # importing actionlib module
 import math                                     # importing python-math module
+
+import moveit_msgs.msg                          # importing messages from moveit
+import geometry_msgs.msg                        # importing messages of type geometry
+
 
 from pkg_vb_sim.srv import vacuumGripper        # importing the service for vacuum-gripper
 from pkg_vb_sim.srv import conveyorBeltPowerMsg # importing the service for conveyor-belt
@@ -44,47 +47,39 @@ ur5_pose_box.orientation.w = 0.5
 
 # defining home-pose
 
-home_pose = geometry_msgs.msg.Pose()
-home_pose.position.x = -0.8
-home_pose.position.y = 0.0
-home_pose.position.z = 1.22
-home_pose.orientation.x = -0.5
-home_pose.orientation.y = -0.5
-home_pose.orientation.z = 0.5
-home_pose.orientation.w = 0.5
+lst_joint_angles_home = [0.13685723861509302,
+						-2.4187425237720737,
+						-0.9814488113660955,
+						-1.3126940302415715,
+						1.570201522236509,
+						0.1377829842690499]
 
 # defining the pose of red bin
 
-pose_red_bin = geometry_msgs.msg.Pose()
-pose_red_bin.position.x = 0.11
-pose_red_bin.position.y = 0.65
-pose_red_bin.position.z = 1.4
-pose_red_bin.orientation.x = -0.5
-pose_red_bin.orientation.y = -0.5
-pose_red_bin.orientation.z = 0.5
-pose_red_bin.orientation.w = 0.5
+lst_joint_angles_red_bin = [-1.572184973613136,
+							-2.0994949938510876,
+							-0.5254250205227358,
+							-2.086538285094317,
+							1.5699339831843382,
+							-1.5724046515014916]
 
 # defining the pose of green bin
 
-pose_green_bin = geometry_msgs.msg.Pose()
-pose_green_bin.position.x = 0.75
-pose_green_bin.position.y = 0.03
-pose_green_bin.position.z = 1.3
-pose_green_bin.orientation.x = -0.5
-pose_green_bin.orientation.y = -0.5
-pose_green_bin.orientation.z = 0.5
-pose_green_bin.orientation.w = 0.5
+lst_joint_angles_green_bin = [-0.10595895571085823,
+								-0.857728977300714,
+								1.1972589199929713,
+								-1.9105803216062958,
+								-1.5699827701952476,
+								 3.0347509373039987]
 
 # defining the pose of blue bin
 
-pose_blue_bin = geometry_msgs.msg.Pose()
-pose_blue_bin.position.x = 0.04
-pose_blue_bin.position.y = -0.65
-pose_blue_bin.position.z = 1.22
-pose_blue_bin.orientation.x = -0.5
-pose_blue_bin.orientation.y = -0.5
-pose_blue_bin.orientation.z = 0.5
-pose_blue_bin.orientation.w = 0.5
+lst_joint_angles_blue_bin = [1.8006901509669113,
+								-2.0743284534279427,
+								-1.5773086584286702,
+								-1.0598575186767052,
+								1.570639394818273,
+								1.79996415235194]
 
 
 class Ur5Moveit:
@@ -132,25 +127,25 @@ class Ur5Moveit:
         rospy.loginfo('\033[94m' + ' >>> Ur5Moveit init done.'
                       + '\033[0m')
 
-    def go_to_pose(self, arg_pose):
+    def set_joint_angles(self, arg_list_joint_angles):
 
-        self._group.set_pose_target(arg_pose)
+        self._group.set_joint_value_target(arg_list_joint_angles)
+        self._group.plan()
         flag_plan = self._group.go(wait=True)
 
-        if flag_plan == True:
-            rospy.loginfo('\033[94m' + '>>> go to Home Pose Success '
-                          + '\033[0m')
+        if (flag_plan == True):
+            rospy.loginfo(
+                '\033[94m' + "^^^^^^^^^^^Home Pose Success^^^^^^^^^^^^" + '\033[0m')
         else:
-            rospy.logerr('\033[94m'
-                         + '>>> Solution for Home Pose not Found.'
-                         + '\033[0m')
+            rospy.logerr(
+                '\033[94m' + "^^^^^^^^^^^Home Pose Failed^^^^^^^^^^^^" + '\033[0m')
 
         return flag_plan
 
     def pick_place(
         self,
         arg_pose_box,
-        arg_pose_bin,
+        arg_list_joint_angles_bin,
         box_name,
         ):
 
@@ -168,7 +163,7 @@ class Ur5Moveit:
         box_pose_rviz = geometry_msgs.msg.PoseStamped()
         box_pose_rviz.pose.position.x = arg_pose_box.position.x
         box_pose_rviz.pose.position.y = arg_pose_box.position.y
-        box_pose_rviz.pose.position.z = arg_pose_box.position.z - 0.192  # offset for no collision
+        box_pose_rviz.pose.position.z = arg_pose_box.position.z - 0.193  # offset for no collision
         box_pose_rviz.header.frame_id = 'world'
 
         # going to box pose
@@ -177,11 +172,11 @@ class Ur5Moveit:
         flag_plan_box = self._group.go(wait=True)
 
         if flag_plan_box == True:
-            rospy.loginfo('\033[94m' + '>>> go to box' + box_name
-                          + 'Pose Success' + '\033[0m')
+            rospy.loginfo('\033[94m' + '>>> go to box^^^^^^^^^' + box_name
+                          + '^^^^^^^^^^^Pose Success' + '\033[0m')
         else:
-            rospy.logerr('\033[94m' + '>>>  Solution for box'
-                         + box_name + 'Pose not Found.' + '\033[0m')
+            rospy.logerr('\033[94m' + '>>>  Solution for box^^^^^^^^^^^^'
+                         + box_name + '^^^^^^^^^^^Pose not Found.' + '\033[0m')
 
         # activating vacuum gripper
 
@@ -200,16 +195,16 @@ class Ur5Moveit:
 
         # going to bin pose
 
-        self._group.set_pose_target(arg_pose_bin)
+        self._group.set_joint_value_target(arg_list_joint_angles_bin)
+        self._group.plan()
         flag_plan_bin = self._group.go(wait=True)
 
-        if flag_plan_bin == True:
-            rospy.loginfo('\033[94m' + '>>> go to bin Pose Success'
-                          + '\033[0m')
+        if (flag_plan_bin == True):
+            rospy.loginfo(
+                '\033[94m' + "^^^^^^^^^^^Bin Pose Success^^^^^^^^^^^^" + '\033[0m')
         else:
-            rospy.logerr('\033[94m'
-                         + '>>> go_to_pose() Failed. Solution for bin Pose not Found.'
-                          + '\033[0m')
+            rospy.logerr(
+                '\033[94m' + "^^^^^^^^^^^Bin Pose Failed^^^^^^^^^^^^" + '\033[0m')
 
         # deactivating vacuum gripper
 
@@ -258,8 +253,8 @@ class Ur5Moveit:
 
             # if 'packagen1' is found and is near specified pose range in y-axis of logical camera
 
-            if name_model == 'packagen1' and pos.position.y >= -0.03 \
-                and pos.position.y < 0.03 and flag1 == 0:
+            if name_model == 'packagen1' and pos.position.y >= -0.05 \
+                and pos.position.y < 0.05 and flag1 == 0:
 
                 # stopping conveyor belt
 
@@ -274,8 +269,8 @@ class Ur5Moveit:
                 flag1 = 1
                 red_flag = 1
 
-            elif name_model == 'packagen2' and pos.position.y >= -0.03 \
-                and pos.position.y < 0.03 and flag2 == 0:
+            elif name_model == 'packagen2' and pos.position.y >= -0.05 \
+                and pos.position.y < 0.05 and flag2 == 0:
 
             # if 'packagen2' is found and is near specified pose range in y-axis of logical camera
 
@@ -292,8 +287,8 @@ class Ur5Moveit:
                 flag2 = 1
                 green_flag = 1
 
-            elif name_model == 'packagen3' and pos.position.y >= -0.03 \
-                and pos.position.y < 0.03 and flag3 == 0:
+            elif name_model == 'packagen3' and pos.position.y >= -0.05 \
+                and pos.position.y < 0.05 and flag3 == 0:
 
             # if 'packagen3' is found and is near specified pose range in y-axis of logical camera
 
@@ -334,13 +329,17 @@ def main():
     cb_req = rospy.ServiceProxy('/eyrc/vb/conveyor/set_power',
                                 conveyorBeltPowerMsg)
 
+    # let other threads get CPU time
+
+    rospy.sleep(4) # also controls execution time of task
+
     # got to home pose
 
-    ur5.go_to_pose(home_pose)
+    ur5.set_joint_angles(lst_joint_angles_home)
 
     # let other threads get CPU time
 
-    rospy.sleep(4)
+    rospy.sleep(4) # also controls execution time of task
 
     # starting the conveyor belt
 
@@ -353,11 +352,11 @@ def main():
 
     # pick red box and place in red bin
 
-    ur5.pick_place(ur5_pose_box, pose_red_bin, box_info)
+    ur5.pick_place(ur5_pose_box, lst_joint_angles_red_bin, box_info)
 
     # comeback to home pose
 
-    #ur5.go_to_pose(home_pose)
+    ur5.set_joint_angles(lst_joint_angles_home)
 
     # wait for feedback from callback topic subscription
 
@@ -366,7 +365,7 @@ def main():
 
     # pick green box and place in green bin
 
-    ur5.pick_place(ur5_pose_box, pose_green_bin, box_info)
+    ur5.pick_place(ur5_pose_box, lst_joint_angles_green_bin, box_info)
 
     # comeback to home pose
 
@@ -379,11 +378,11 @@ def main():
 
     # pick blue box and place in blue bin
 
-    ur5.pick_place(ur5_pose_box, pose_blue_bin, box_info)
+    ur5.pick_place(ur5_pose_box, lst_joint_angles_blue_bin, box_info)
 
     # comeback to home pose
 
-    ur5.go_to_pose(home_pose)
+    ur5.set_joint_angles(lst_joint_angles_home)
 
     # end executing this script
 
