@@ -1,6 +1,9 @@
-# Vargi-Bots-eYRC
+# Vargi-Bots-eYRC                                                                                                                                                                   
+
 E-yantra 2020 Robotics Competition                                                                                             
-Repository contains taskwise modules and packages which are submitted during E-yantra Robotics Competition 2020-2021
+Repository contains taskwise modules and packages which are submitted during E-yantra Robotics Competition 2020-2021                                                               
+                                                                                                                                                                                   
+Simulation of a Amazon warehouse Robots performing operations such as pick and place objects with the help of motion planning algorithms, and also updating the orders data remotely to Google sheets
 
 # Task:1 Video
 [![Watch the video](https://img.youtube.com/vi/RJZF__Eg0U8/maxresdefault.jpg)](https://www.youtube.com/watch?v=RJZF__Eg0U8)
